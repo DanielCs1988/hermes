@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {DatePicker, Form, Item} from "native-base";
 import FormField from "./FormField/FormField";
+import * as moment from "moment";
 
 type Props = {
     fields: any;
@@ -8,7 +9,8 @@ type Props = {
     birthdayChangeHandler: (date: Date) => void;
 };
 const ProfileForm = ({ fields, changeHandler, birthdayChangeHandler }: Props) => {
-    const { givenName, familyName, email, phone, address } = fields;
+    const { givenName, familyName, email, phone, address, birthday } = fields;
+    const birthdayValue = birthday.value > 0 ? moment.unix(birthday.value / 1000).format('l') : null;
     return (
         <Form>
             <FormField
@@ -43,9 +45,9 @@ const ProfileForm = ({ fields, changeHandler, birthdayChangeHandler }: Props) =>
             />
             <Item>
                 <DatePicker
-                    defaultDate={new Date()}
+                    defaultDate={birthdayValue && new Date(birthdayValue) || new Date()}
                     maximumDate={new Date()}
-                    placeHolderText="Pick your birth date!"
+                    placeHolderText={birthdayValue || 'Pick your birth date!'}
                     onDateChange={birthdayChangeHandler}
                     animationType="slide"
                     androidMode="spinner"

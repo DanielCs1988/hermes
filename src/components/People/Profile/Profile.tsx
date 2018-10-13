@@ -31,10 +31,10 @@ const Profile = ({ navigation }: NavProp) => {
                         {
                             person.email || person.phone || person.address || person.birthday ?
                                 <>
-                                    <PersonDetail icon="mail" text={person.email} />
-                                    <PersonDetail icon="phone-portrait" text={person.phone} />
-                                    <PersonDetail icon="home" text={person.address} />
-                                    <PersonDetail icon="calendar" text={person.birthday} />
+                                    <PersonDetail icon="mail" content={person.email} />
+                                    <PersonDetail icon="phone-portrait" content={person.phone} />
+                                    <PersonDetail icon="home" content={person.address} />
+                                    <PersonDetail icon="calendar" date={person.birthday} />
                                 </> :
                                 <H1 style={{ alignSelf: 'center' }}>No profile info to see here!</H1>
                         }

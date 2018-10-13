@@ -18,12 +18,26 @@ const initialState = {
     address: {...formDefault},
     birthday: {
         value: 0,
-        valid: true
+        valid: false
     }
 };
 type State = Readonly<IForm>;
 class EditProfile extends React.Component<NavProp, State> {
-    readonly state = initialState;
+    constructor(props: NavProp) {
+        super(props);
+        const person = props.navigation.getParam('person', {});
+        this.state = {
+            ...initialState,
+            ...Object.keys(person)
+                .map(key => ({
+                    [key]: {
+                        ...formDefault,
+                        value: person[key]
+                    }
+                }))
+                .reduce((a, b) => ({...a, ...b}), {})
+        };
+    }
 
     private changeHandler = (inputName: string, newValue: string) => {
         this.setState(prevState => ({
