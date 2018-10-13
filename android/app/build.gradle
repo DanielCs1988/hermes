@@ -137,7 +137,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-splash-screen')
     compile project(':react-native-maps')
     compile project(':react-native-image-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
