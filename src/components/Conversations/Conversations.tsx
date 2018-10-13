@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { NavProp } from "../../shared/models";
-import {Button, H1, Text} from "native-base";
 import Layout from "../../hoc/Layout/Layout";
-import {Routes} from "../../shared/constants";
+import {FlatList} from "react-native";
+import {people} from "../People/People";
+import Conversation from "./Conversation/Conversation";
 
 const Conversations = ({ navigation }: NavProp) => (
     <Layout navigation={navigation} title="Conversations">
-        <H1>Conversations Panel</H1>
-        <Button onPress={() => navigation.navigate(Routes.CHAT_WINDOW)}>
-            <Text>Chat Window</Text>
-        </Button>
+        <FlatList
+            data={people}
+            renderItem={({ item }) => <Conversation navigation={navigation} person={item} />}
+            keyExtractor={person => person.id}
+        />
     </Layout>
 );
 export default Conversations;

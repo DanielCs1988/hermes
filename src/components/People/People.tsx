@@ -7,7 +7,7 @@ import {ListView} from "react-native";
 import Person from "./Person/Person";
 import {Routes} from "../../shared/constants";
 
-const people: IPerson[] = [
+export const people: IPerson[] = [
     {
         id: 'asd',
         givenName: 'John',

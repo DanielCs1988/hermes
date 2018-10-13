@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DatePicker, Form, Item} from "native-base";
 import FormField from "./FormField/FormField";
-import * as moment from "moment";
+import moment from "moment";
 
 type Props = {
     fields: any;
@@ -10,7 +10,7 @@ type Props = {
 };
 const ProfileForm = ({ fields, changeHandler, birthdayChangeHandler }: Props) => {
     const { givenName, familyName, email, phone, address, birthday } = fields;
-    const birthdayValue = birthday.value > 0 ? moment.unix(birthday.value / 1000).format('l') : null;
+    const birthdayValue = birthday.value > 0 ? moment(birthday.value).format('l') : null;
     return (
         <Form>
             <FormField
