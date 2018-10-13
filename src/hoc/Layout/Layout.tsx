@@ -11,7 +11,7 @@ type Props = NavProp & {
 const Layout = ({ navigation, title, back = false, children }: Props) => (
     <Container>
         <NavBar navigation={navigation} title={title} back={back} />
-        <Content>{children}</Content>
+        <Content padder>{children}</Content>
     </Container>
 );
 

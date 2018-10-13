@@ -8,6 +8,7 @@ export enum Routes {
     PEOPLE_STACK = 'PeopleStack',
     PEOPLE = 'People',
     PROFILE = 'Profile',
+    EDIT_PROFILE = 'EditProfile',
     CHAT_STACK = 'ChatStack',
     CONVERSATIONS = 'Conversations',
     CHAT_WINDOW = 'ChatWindow'
