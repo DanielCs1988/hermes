@@ -6,12 +6,13 @@ import {Container, Content} from "native-base";
 type Props = NavProp & {
     title: string;
     back?: boolean;
+    padded?: boolean;
     children: React.ReactNode;
 }
-const Layout = ({ navigation, title, back = false, children }: Props) => (
+const Layout = ({ navigation, title, back = false, padded = false, children }: Props) => (
     <Container>
         <NavBar navigation={navigation} title={title} back={back} />
-        <Content padder>{children}</Content>
+        <Content padder={padded}>{children}</Content>
     </Container>
 );
 
