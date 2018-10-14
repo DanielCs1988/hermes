@@ -48,7 +48,7 @@ class People extends React.Component<NavProp> {
                             <Icon name={PlatformIcon('person')}/>
                         </Button>
                     )}
-                    renderRow={person => <Person person={person} />}
+                    renderRow={person => <Person person={person} navigation={navigation} />}
                 />
             </Layout>
         );
