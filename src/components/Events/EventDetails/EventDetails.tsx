@@ -6,6 +6,9 @@ import {Image, Text, View} from "react-native";
 import {people} from "../../People/People";
 import {PlatformIcon} from "../../../shared/utils";
 import moment from 'moment';
+import EventTimePicker from "../../UI/DateTimePicker/EventTimePicker";
+import LocationPicker from "../../UI/LocationPicker/LocationPicker";
+import ImagePickerForm from "../../UI/ImagePickerForm/ImagePickerForm";
 
 const EventDetails = ({ navigation }: NavProp) => {
     const event: IEvent = navigation.getParam('event', {});
@@ -37,6 +40,19 @@ const EventDetails = ({ navigation }: NavProp) => {
             </View>
             <NBText style={{ padding: 10 }}>Lots of people will be there!</NBText>
             <NBText style={{ padding: 10 }}>{description}</NBText>
+            <EventTimePicker
+                showIcon
+                datePlaceholder="Beginning date"
+                timePlaceholder="Begins at"
+                onDateTimePicked={dt => alert(dt)}
+            />
+            <EventTimePicker
+                datePlaceholder="Ending date"
+                timePlaceholder="Ends at"
+                onDateTimePicked={dt => alert(dt)}
+            />
+            <LocationPicker onLocationPicked={loc => alert(JSON.stringify(loc, undefined, 4))} />
+            <ImagePickerForm onImagePicked={() => {}} />
         </Layout>
     );
 };
