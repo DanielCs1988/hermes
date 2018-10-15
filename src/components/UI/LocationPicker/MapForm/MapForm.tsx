@@ -17,10 +17,25 @@ const initialState = {
 type State = Readonly<typeof initialState>
 type Props = {
     onLocationPicked: (location: Location) => void;
+    value?: Location;
 }
 class MapForm extends React.Component<Props, State> {
-    readonly state = initialState;
     private map = React.createRef<MapView>();
+
+    constructor(props) {
+        super(props);
+        const locationProvided = props.value;
+        this.state = {
+            ...initialState,
+            locationText: locationProvided ? props.value.name : initialState.locationText,
+            locationPicked: locationProvided,
+            location: {
+                ...initialState.location,
+                longitude: locationProvided ? props.value.longitude : initialState.location.longitude,
+                latitude: locationProvided ? props.value.latitude : initialState.location.latitude
+            }
+        };
+    }
 
     private sendLocation = (location: Location) => {
         if (this.state.locationText.trim().length > 0) {

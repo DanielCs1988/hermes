@@ -6,14 +6,18 @@ import {PlatformIcon, showErrorMessage} from "../../../shared/utils";
 
 type Props = {
     onImagePicked: (image: ImageURISource) => void;
+    value?: ImageURISource;
 }
 type State = {
     pickedImage: ImageURISource | null;
 }
 class ImagePickerForm extends React.Component<Props, State> {
-    readonly state = {
-        pickedImage: null
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            pickedImage: props.value
+        };
+    }
 
     pickImageHandler = () => {
         ImagePicker.showImagePicker({

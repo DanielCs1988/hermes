@@ -16,12 +16,22 @@ type State = Readonly<typeof initialState>
 type Props = {
     showIcon?: boolean;
     minimumDate?: Date;
+    value?: Date;
     onDateTimePicked: (dateTime: Date) => void;
     datePlaceholder: string;
     timePlaceholder: string;
 }
 class EventTimePicker extends React.Component<Props, State> {
-    readonly state = initialState;
+    constructor(props) {
+        super(props);
+        const valueProvided = props.value;
+        this.state = {
+            ...initialState,
+            value: valueProvided ? props.value : initialState.value,
+            datePicked: valueProvided,
+            timePicked: valueProvided
+        };
+    }
 
     private closeDatePicker = () => {
         this.setState({ showDatePicker: false });

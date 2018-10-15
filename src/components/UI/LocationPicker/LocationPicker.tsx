@@ -5,15 +5,19 @@ import {PlatformIcon} from "../../../shared/utils";
 import MapForm from "./MapForm/MapForm";
 import {Location} from "../../../shared/models";
 
-const initialState = {
-    open: false
-};
-type State = Readonly<typeof initialState>
+type State = Readonly<{ open: boolean }>
 type Props = {
     onLocationPicked: (location: Location) => void;
+    value?: Location;
 }
 class LocationPicker extends React.Component<Props, State> {
-    readonly state = initialState;
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: props.value
+        };
+    }
+
 
     render() {
         return (
@@ -28,7 +32,10 @@ class LocationPicker extends React.Component<Props, State> {
                         </Button>
                     </View>
                 </View>
-                { this.state.open && <MapForm onLocationPicked={this.props.onLocationPicked} /> }
+                { this.state.open && <MapForm
+                    onLocationPicked={this.props.onLocationPicked}
+                    value={this.props.value}
+                /> }
             </>
         );
     }

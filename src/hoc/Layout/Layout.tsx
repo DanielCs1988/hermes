@@ -7,12 +7,14 @@ type Props = NavProp & {
     title: string;
     back?: boolean;
     padded?: boolean;
+    footer?: React.ReactNode;
     children: React.ReactNode;
 }
-const Layout = ({ navigation, title, back = false, padded = false, children }: Props) => (
+const Layout = ({ navigation, title, back = false, padded = false, footer, children }: Props) => (
     <Container>
         <NavBar navigation={navigation} title={title} back={back} />
         <Content padder={padded}>{children}</Content>
+        { footer }
     </Container>
 );
 

@@ -2,9 +2,8 @@ import * as React from 'react';
 import {Message, NavProp} from "../../../shared/models";
 import {FlatList} from "react-native";
 import ChatMessage from "./ChatMessage/ChatMessage";
-import {Container, Content} from "native-base";
-import NavBar from "../../UI/NavBar/NavBar";
 import ChatForm from "./ChatForm/ChatForm";
+import Layout from "../../../hoc/Layout/Layout";
 
 const messages: Message[] = [
     {
@@ -39,22 +38,22 @@ const messages: Message[] = [
 const ChatWindow = ({ navigation }: NavProp) => {
     const person = navigation.getParam('person', {});
     return (
-        <Container>
-            <NavBar navigation={navigation} title={person.givenName} back />
-            <Content>
-                <FlatList
-                    data={messages}
-                    renderItem={({ item }) => (
-                        <ChatMessage
-                            message={item}
-                            currentUser="Other Anon"
-                            otherUser={{ uri: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg' }}/>
-                    )}
-                    keyExtractor={message => message.id}
-                />
-            </Content>
-            <ChatForm currentUserId="Other Anon" targetUserId="Anon" />
-        </Container>
+        <Layout back
+            navigation={navigation}
+            title={person.givenName}
+            footer={<ChatForm currentUserId="Other Anon" targetUserId="Anon" />}>
+            <FlatList
+                data={messages}
+                renderItem={({ item }) => (
+                    <ChatMessage
+                        message={item}
+                        currentUser="Other Anon"
+                        otherUser={{ uri: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg' }}/>
+                )}
+                keyExtractor={message => message.id}
+            />
+        </Layout>
     );
 };
+
 export default ChatWindow;

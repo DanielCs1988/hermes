@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {Event as IEvent, NavProp} from "../../shared/models";
-import {Container, DeckSwiper} from "native-base";
+import {Container, DeckSwiper, Fab, Icon} from "native-base";
 import Event from "./Event/Event";
 import NavBar from "../UI/NavBar/NavBar";
 import {View} from "react-native";
+import {PlatformIcon} from "../../shared/utils";
+import {Routes} from "../../shared/constants";
 
 const organizerImage = { uri: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg' };
 const events: IEvent[] = [
@@ -17,8 +19,8 @@ const events: IEvent[] = [
         to: 1542322800000,
         location: {
             name: 'Somewhere',
-            latitude: 40.3434234234,
-            longitude: 65.4324234423
+            latitude: 47.4924430302,
+            longitude: 19.0527914555
         },
         organizerId: 'Anon',
         participants: ['Anon', 'Other Anon']
@@ -56,6 +58,9 @@ const Events = ({ navigation }: NavProp) => (
                 )}
             />
         </View>
+        <Fab onPress={() => navigation.navigate(Routes.NEW_EVENT)} position="bottomRight">
+            <Icon name={PlatformIcon('create')} />
+        </Fab>
     </Container>
 );
 export default Events;

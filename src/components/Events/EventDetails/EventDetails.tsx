@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {H2, H3, Icon, Text as NBText} from "native-base";
+import {Button, H2, Icon, Text as NBText} from "native-base";
 import {Event as IEvent, NavProp} from "../../../shared/models";
 import Layout from "../../../hoc/Layout/Layout";
 import {Image, Text, View} from "react-native";
 import {people} from "../../People/People";
 import {PlatformIcon} from "../../../shared/utils";
 import moment from 'moment';
-import EventTimePicker from "../../UI/DateTimePicker/EventTimePicker";
-import LocationPicker from "../../UI/LocationPicker/LocationPicker";
-import ImagePickerForm from "../../UI/ImagePickerForm/ImagePickerForm";
+import {Routes} from "../../../shared/constants";
+import styles from "./EventDetails.styles";
 
 const EventDetails = ({ navigation }: NavProp) => {
     const event: IEvent = navigation.getParam('event', {});
@@ -17,42 +16,49 @@ const EventDetails = ({ navigation }: NavProp) => {
     return (
         <Layout navigation={navigation} title="Event Details" back>
             <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
-            <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#aaa' }}>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Nov</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>18</Text>
+            <View style={styles.row}>
+                <View style={styles.leftCol}>
+                    <Text style={styles.monthAbbr}>Nov</Text>
+                    <Text style={styles.dayAbbr}>18</Text>
                 </View>
-                <View style={{ flex: 4, justifyContent: 'center' }}>
+                <View style={styles.rightCol}>
                     <H2>{title}</H2>
                     <NBText note>Organizer: {organizer.givenName} {organizer.familyName}</NBText>
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-                <Icon name={PlatformIcon('locate')}/>
-                <H3 style={{ marginLeft: 10 }}>{location.name}</H3>
+            <View style={[styles.row, styles.buttonGroup]}>
+                <Button rounded bordered success
+                        onPress={() => alert('Joined!')}>
+                    <NBText>Join</NBText>
+                </Button>
+                <Button rounded bordered
+                        onPress={() => navigation.navigate(Routes.EDIT_EVENT, { event })}>
+                    <NBText>Update</NBText>
+                </Button>
+                <Button rounded bordered danger
+                        onPress={() => alert('Deleted!')}>
+                    <NBText>Delete</NBText>
+                </Button>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 5, borderBottomColor: '#999' }}>
-                <Icon name={PlatformIcon('time')}/>
-                <View style={{ marginLeft: 10 }}>
+            <View style={styles.row}>
+                <View style={styles.leftCol}>
+                    <Icon name={PlatformIcon('map')}/>
+                </View>
+                <View style={styles.rightCol}>
+                    <H2>{location.name}</H2>
+                </View>
+            </View>
+            <View style={[styles.row, styles.thickBorder]}>
+                <View style={styles.leftCol}>
+                    <Icon name={PlatformIcon('time')}/>
+                </View>
+                <View style={styles.rightCol}>
                     <NBText>From: {moment(from).format('llll')}</NBText>
                     <NBText>To: {moment(to).format('llll')}</NBText>
                 </View>
             </View>
             <NBText style={{ padding: 10 }}>Lots of people will be there!</NBText>
             <NBText style={{ padding: 10 }}>{description}</NBText>
-            <EventTimePicker
-                showIcon
-                datePlaceholder="Beginning date"
-                timePlaceholder="Begins at"
-                onDateTimePicked={dt => alert(dt)}
-            />
-            <EventTimePicker
-                datePlaceholder="Ending date"
-                timePlaceholder="Ends at"
-                onDateTimePicked={dt => alert(dt)}
-            />
-            <LocationPicker onLocationPicked={loc => alert(JSON.stringify(loc, undefined, 4))} />
-            <ImagePickerForm onImagePicked={() => {}} />
         </Layout>
     );
 };
