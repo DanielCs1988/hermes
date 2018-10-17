@@ -47,7 +47,8 @@ class EventForm extends React.Component<Props, any> {
 
     private validateForm = () => {
         return Object.values(this.state).every(val => val !== null) &&
-            this.state.title.trim().length > 0;
+            this.state.title.trim().length > 0 &&
+            this.state.location.name.trim().length > 0;
     };
 
     render() {

@@ -35,6 +35,11 @@ export interface Message extends Entity {
     createdAt: number;
 }
 
+export interface Conversation {
+    with: Person;
+    lastMessage: Message;
+}
+
 export interface Location {
     name: string;
     latitude: number;
@@ -59,7 +64,6 @@ export interface Credentials {
 }
 export interface AuthPayload {
     token: string;
-    userId: string;
     expiresIn?: number;
     refreshToken?: string;
 }
