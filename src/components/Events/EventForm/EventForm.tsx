@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Event, NavProp} from "../../../shared/models";
+import {IEvent, NavProp} from "../../../shared/models";
 import EventTimePicker from "../../UI/DateTimePicker/EventTimePicker";
 import LocationPicker from "../../UI/LocationPicker/LocationPicker";
 import ImagePickerForm from "../../UI/ImagePickerForm/ImagePickerForm";
@@ -17,13 +17,13 @@ const initialState = {
     isNewEvent: false
 };
 type Props = NavProp & {
-    onNewEvent: (event: Event) => void;
-    onUpdateEvent: (event: Event) => void;
+    onNewEvent: (event: IEvent) => void;
+    onUpdateEvent: (event: IEvent) => void;
 }
 class EventForm extends React.Component<Props, any> {
     constructor(props) {
         super(props);
-        const event: Event = props.navigation.getParam('event', {});
+        const event: IEvent = props.navigation.getParam('event', {});
         this.state = {
             ...initialState,
             ...event,

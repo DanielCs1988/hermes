@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {NavProp, Person} from "../../../shared/models";
+import {NavProp, IPerson} from "../../../shared/models";
 import {Body, Left, ListItem, Right, Text, Thumbnail} from "native-base";
 import {Routes} from "../../../shared/constants";
 import moment from "moment";
 
 type Props = NavProp & {
-    person: Person;
+    person: IPerson;
 }
 const Conversation = ({ person, navigation }: Props) => (
     <ListItem avatar

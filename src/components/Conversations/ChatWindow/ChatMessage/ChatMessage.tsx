@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Message} from "../../../../shared/models";
+import {IMessage} from "../../../../shared/models";
 import {Body, Left, ListItem, Right, Text, Thumbnail} from "native-base";
 import {ImageURISource} from "react-native";
 
 type Props = {
-    message: Message;
+    message: IMessage;
     currentUser: string;
     otherUser: ImageURISource;
 }

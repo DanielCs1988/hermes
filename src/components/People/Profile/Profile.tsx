@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Button, Card, Col, Grid, H1, H3, Icon, Row, Text} from "native-base";
 import Layout from "../../../hoc/Layout/Layout";
-import {NavProp, Person} from "../../../shared/models";
+import {NavProp, IPerson} from "../../../shared/models";
 import {Image} from "react-native";
 import PersonDetail from "./PersonDetail/PersonDetail";
 import {PlatformIcon} from "../../../shared/utils";
 import {Routes} from "../../../shared/constants";
 
 const Profile = ({ navigation }: NavProp) => {
-    const person: Person = navigation.getParam('person', {});
+    const person: IPerson = navigation.getParam('person', {});
     return (
         <Layout navigation={navigation} title={`${person.givenName} ${person.familyName}`} back>
             <Grid>

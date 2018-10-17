@@ -1,5 +1,5 @@
 import { ActionsUnion, createAction } from "../action-creator";
-import {Conversation} from "../../shared/models";
+import {IConversation} from "../../shared/models";
 import {ChatHistory} from "../types";
 
 export enum ActionTypes {
@@ -10,7 +10,7 @@ export enum ActionTypes {
 }
 
 export const Actions = {
-    fetchConversationsSuccess: (conversations: Conversation[]) => createAction(
+    fetchConversationsSuccess: (conversations: IConversation[]) => createAction(
         ActionTypes.FETCH_CONVERSATIONS_SUCCESS, conversations
     ),
     fetchConversationsFailed: (reason: string) => createAction(ActionTypes.FETCH_CONVERSATIONS_FAILED, reason),

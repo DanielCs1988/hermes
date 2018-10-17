@@ -1,33 +1,34 @@
-import {Conversation, Event, Message, Person} from "../shared/models";
+import {IConversation, IEvent, IMessage, IPerson} from "../shared/models";
 import {PeopleActions} from "./actions/people";
 import {ConversationActions} from "./actions/conversations";
 import {EventActions} from "./actions/events";
 import {AuthActions} from "./actions/auth";
 
-interface Loadable {
+export interface Loadable {
     loading: boolean;
     error: string | null;
 }
-interface FetchedData extends Loadable {
+export interface FetchedData extends Loadable {
     fetched: boolean;
 }
 
+export interface IPeople {
+    [id: string]: IPerson
+}
 export interface PeopleState extends FetchedData {
-    people: {
-        [id: string]: Person
-    };
+    people: IPeople;
 }
 
 export interface ChatHistory {
-    [target: string]: Message[];
+    [target: string]: IMessage[];
 }
 export interface ConversationState extends FetchedData {
-    conversations: Conversation[];
+    conversations: IConversation[];
     messages: ChatHistory;
 }
 
 export interface EventState extends FetchedData {
-    events: Event[];
+    events: IEvent[];
 }
 
 export interface AuthState extends Loadable {

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {Button, H2, Icon, Text as NBText} from "native-base";
-import {Event as IEvent, NavProp} from "../../../shared/models";
+import {IEvent as IEvent, NavProp} from "../../../shared/models";
 import Layout from "../../../hoc/Layout/Layout";
 import {Image, Text, View} from "react-native";
-import {people} from "../../People/People";
 import {PlatformIcon} from "../../../shared/utils";
 import moment from 'moment';
 import {Routes} from "../../../shared/constants";
@@ -11,8 +10,7 @@ import styles from "./EventDetails.styles";
 
 const EventDetails = ({ navigation }: NavProp) => {
     const event: IEvent = navigation.getParam('event', {});
-    const organizer = people[0];
-    const { image, title, location, from, to, description } = event;
+    const { image, title, location, from, to, description, organizer } = event;
     return (
         <Layout navigation={navigation} title="Event Details" back>
             <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />

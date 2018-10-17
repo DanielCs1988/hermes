@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {Message, NavProp} from "../../../shared/models";
+import {IMessage, NavProp} from "../../../shared/models";
 import {FlatList} from "react-native";
 import ChatMessage from "./ChatMessage/ChatMessage";
 import ChatForm from "./ChatForm/ChatForm";
 import Layout from "../../../hoc/Layout/Layout";
 
-const messages: Message[] = [
+const messages: IMessage[] = [
     {
         id: 'smh',
         content: 'Hey there',

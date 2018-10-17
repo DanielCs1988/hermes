@@ -17,7 +17,7 @@ export interface Entity {
     id: string;
 }
 
-export interface Person extends Entity {
+export interface IPerson extends Entity {
     givenName: string;
     familyName: string;
     profilePicture: ImageURISource;
@@ -28,16 +28,16 @@ export interface Person extends Entity {
     birthday?: number;
 }
 
-export interface Message extends Entity {
+export interface IMessage extends Entity {
     content: string;
     from: string;
     to: string;
     createdAt: number;
 }
 
-export interface Conversation {
-    with: Person;
-    lastMessage: Message;
+export interface IConversation {
+    with: IPerson;
+    lastMessage: IMessage;
 }
 
 export interface Location {
@@ -46,16 +46,16 @@ export interface Location {
     longitude: number;
 }
 
-export interface Event extends Entity {
+export interface IEvent extends Entity {
     title: string;
     description?: string;
     image?: ImageURISource;
     location: Location;
-    organizerId: string;
+    organizer: IPerson;
     createdAt: number;
     from: number;
     to: number;
-    participants: string[];
+    participants: IPerson[];
 }
 
 export interface Credentials {

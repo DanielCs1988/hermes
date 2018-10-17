@@ -9,7 +9,7 @@ const initialState: ConversationState = {
     fetched: false
 };
 
-const conversationReducer = (state = initialState, action: ConversationActions) => {
+const conversationReducer = (state = initialState, action: ConversationActions): ConversationState => {
     switch (action.type) {
         default:
             return state;

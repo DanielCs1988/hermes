@@ -15,10 +15,16 @@ export const showErrorMessage = (text: string) => {
     });
 };
 
-export const chooseBetween = (condition: boolean, func1: Function, func2: Function, ...args: any[]) => {
+export const chooseBetween = (condition: any, func1: Function, func2: Function, ...args: any[]) => {
     if (condition) {
         func1(...args);
     } else {
         func2(...args);
+    }
+};
+
+export const runIf = (condition: any, func: Function, ...args: any[]) => {
+    if (condition) {
+        func(...args);
     }
 };

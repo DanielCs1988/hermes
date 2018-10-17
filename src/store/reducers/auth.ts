@@ -8,7 +8,7 @@ const initialState: AuthState = {
     error: null
 };
 
-const authReducer = (state = initialState, action: AuthActions) => {
+const authReducer = (state = initialState, action: AuthActions): AuthState => {
     switch (action.type) {
         default:
             return state;

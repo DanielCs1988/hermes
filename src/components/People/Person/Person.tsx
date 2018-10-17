@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavProp, Person as IPerson} from "../../../shared/models";
+import {NavProp, IPerson as IPerson} from "../../../shared/models";
 import {Body, Icon, Left, ListItem, Right, Text, Thumbnail} from "native-base";
 import {PlatformIcon} from "../../../shared/utils";
 import {Routes} from "../../../shared/constants";

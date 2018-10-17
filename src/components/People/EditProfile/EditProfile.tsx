@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Button, Col, Icon, Row, Text} from "native-base";
 import Layout from "../../../hoc/Layout/Layout";
-import {IForm, NavProp, Person} from "../../../shared/models";
+import {IForm, NavProp, IPerson} from "../../../shared/models";
 import {PlatformIcon} from "../../../shared/utils";
 import {Image} from "react-native";
 import ProfileForm from "./ProfileForm/ProfileForm";
@@ -64,7 +64,7 @@ class EditProfile extends React.Component<NavProp, State> {
 
     render() {
         const { navigation } = this.props;
-        const person: Person = navigation.getParam('person', {});
+        const person: IPerson = navigation.getParam('person', {});
         return (
             <Layout navigation={navigation} title="Update Profile" back>
                 <Row>

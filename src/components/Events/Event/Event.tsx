@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Event as IEvent, NavProp} from "../../../shared/models";
-import {Image, ImageURISource} from "react-native";
+import {IEvent as IEvent, NavProp} from "../../../shared/models";
+import {Image} from "react-native";
 import {Body, Button, Card, CardItem, Icon, Left, Right, Text, Thumbnail} from "native-base";
 import moment from 'moment';
 import {PlatformIcon} from "../../../shared/utils";
@@ -8,15 +8,14 @@ import {Routes} from "../../../shared/constants";
 
 type Props = NavProp & {
     event: IEvent;
-    organizerAvatar: ImageURISource;
 }
-const Event = ({ event, organizerAvatar, navigation }: Props) => {
-    const { title, from, location, participants } = event;
+const Event = ({ event, navigation }: Props) => {
+    const { title, from, location, participants, organizer: { profilePicture } } = event;
     return (
         <Card>
             <CardItem>
                 <Left style={{ flex: 1, marginRight: 20 }}>
-                    <Thumbnail source={organizerAvatar} />
+                    <Thumbnail source={profilePicture} />
                 </Left>
                 <Body style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-start' }}>
                     <Text>{title}</Text>
