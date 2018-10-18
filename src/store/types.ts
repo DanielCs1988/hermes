@@ -12,6 +12,11 @@ export interface FetchedData extends Loadable {
     fetched: boolean;
 }
 
+export interface RollbackError<P> {
+    error: string;
+    item: P;
+}
+
 export interface IPeople {
     [id: string]: IPerson
 }
