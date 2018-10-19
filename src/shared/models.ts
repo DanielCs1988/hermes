@@ -30,9 +30,9 @@ export interface IPerson extends Entity {
 
 export interface IMessage extends Entity {
     content: string;
-    from: string;
+    from?: string;
     to: string;
-    createdAt: number;
+    createdAt?: number;
 }
 
 export interface IConversation {

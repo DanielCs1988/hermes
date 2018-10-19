@@ -1,7 +1,7 @@
 import {ActionTypes, EventActions} from "../actions/events";
-import {EventState} from "../types";
+import {AppState, EventState} from "../types";
 
-const initialState: EventState = {
+export const initialState: EventState = {
     events: [],
     loading: false,
     fetched: false
@@ -9,6 +9,11 @@ const initialState: EventState = {
 
 const eventReducer = (state = initialState, action: EventActions): EventState => {
     switch (action.type) {
+        case ActionTypes.INIT_FETCH_EVENTS:
+            return {
+                ...state,
+                loading: true
+            };
         case ActionTypes.FETCH_EVENTS_SUCCESS:
             return {
                 ...state,
@@ -76,6 +81,10 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
         default:
             return state;
     }
+};
+
+export const getEvent = (id: string) => ({ events: { events } }: AppState) => {
+    return events.find(event => event.id === id);
 };
 
 export default eventReducer;

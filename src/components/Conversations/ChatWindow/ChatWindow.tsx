@@ -11,6 +11,7 @@ import Loader from "../../../hoc/Loader/Loader";
 
 type Props = NavProp & ChatWindowDispatchers & {
     messages: ChatHistory;
+    currentUser: string | null;
 }
 class ChatWindow extends React.Component<Props> {
     componentDidMount() {
@@ -23,23 +24,23 @@ class ChatWindow extends React.Component<Props> {
     }
 
     render() {
-        const { navigation, messages } = this.props;
-        const { id, givenName } = navigation.getParam('person', {});
+        const { navigation, messages, currentUser, sendMessage } = this.props;
+        const { id, givenName, profilePicture } = navigation.getParam('person', {});
         const chatHistory = messages[id];
         return (
             <Layout back
                     navigation={navigation}
                     title={givenName || 'Chat'}
-                    footer={<ChatForm currentUserId="Other Anon" targetUserId="Anon" />}>
+                    footer={<ChatForm sendMessage={content => sendMessage({ content, to: id })} />}>
                 <Loader loading={!chatHistory}>
                     <FlatList
                         data={chatHistory}
-                        keyExtractor={message => message.id}
+                        keyExtractor={message => message.id!}
                         renderItem={({ item }) => (
                             <ChatMessage
                                 message={item}
-                                currentUser="Other Anon"
-                                otherUser={{ uri: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg' }}/>
+                                currentUser={currentUser}
+                                targetAvatar={profilePicture}/>
                         )}
                     />
                 </Loader>

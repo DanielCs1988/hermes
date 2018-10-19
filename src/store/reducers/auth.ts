@@ -1,7 +1,7 @@
 import {AuthActions} from "../actions/auth";
 import {AuthState} from "../types";
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
     token: null,
     expiresIn: null,
     loading: false

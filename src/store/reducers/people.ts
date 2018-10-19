@@ -23,7 +23,7 @@ export const initialState: PeopleState = {
             profilePicture: { uri: 'https://usercontent2.hubstatic.com/14052231_f520.jpg' }
         }
     },
-    currentUser: null,
+    currentUser: 'asd',
     loading: false,
     fetched: false
 };
@@ -72,7 +72,7 @@ export const getPerson = (id: string) => ({ people: { people } }: AppState): IPe
     return people[id];
 };
 
-export const getCurrentUser = () => ({ people: { people, currentUser } }: AppState): IPerson | null => {
+export const getCurrentUser = ({ people: { people, currentUser } }: AppState): IPerson | null => {
     return currentUser ? people[currentUser] : null;
 };
 

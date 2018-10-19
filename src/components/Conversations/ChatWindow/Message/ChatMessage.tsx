@@ -5,13 +5,13 @@ import {ImageURISource} from "react-native";
 
 type Props = {
     message: IMessage;
-    currentUser: string;
-    otherUser: ImageURISource;
+    currentUser: string | null;
+    targetAvatar: ImageURISource;
 }
-const ChatMessage = ({ message, currentUser, otherUser }: Props) => (
+const ChatMessage = ({ message, currentUser, targetAvatar }: Props) => (
     <ListItem avatar noBorder>
         <Left>
-            { message.to === currentUser && <Thumbnail source={otherUser} /> }
+            { message.to === currentUser && <Thumbnail source={targetAvatar} /> }
         </Left>
         <Body>
             { message.to === currentUser && <Text>{message.content}</Text> }

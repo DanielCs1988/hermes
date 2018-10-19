@@ -1,7 +1,7 @@
 import {ActionTypes, ConversationActions} from "../actions/conversations";
 import {ConversationState} from "../types";
 
-const initialState: ConversationState = {
+export const initialState: ConversationState = {
     conversations: [],
     messages: {},
     loading: false,

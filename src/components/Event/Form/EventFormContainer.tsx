@@ -4,8 +4,8 @@ import {Actions} from "../../../store/actions/events";
 import EventForm from "./EventForm";
 
 const mapDispatchToProps = (dispatch: Function) => ({
-    createEvent: (event: IEvent) => dispatch(Actions.createEventOptRes(event)),
-    updateEvent: (event: IEvent) => dispatch(Actions.updateEventSuccess(event))
+    createEvent: (event: IEvent) => dispatch(Actions.initCreateEvent(event)),
+    updateEvent: (event: IEvent) => dispatch(Actions.initUpdateEvent(event))
 });
 export type EventFormDispatchers = ReturnType<typeof mapDispatchToProps>;
 

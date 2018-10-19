@@ -10,8 +10,7 @@ const initialState = {
 };
 type State = Readonly<typeof initialState>;
 type Props = {
-    currentUserId: string;
-    targetUserId: string;
+    sendMessage: (content: string) => void;
 };
 class ChatForm extends React.Component<Props, State> {
     readonly state = initialState;
@@ -26,8 +25,10 @@ class ChatForm extends React.Component<Props, State> {
     };
 
     sendMessageHandler = () => {
-        alert(this.state.message.value);
-        this.setState(initialState);
+        if (this.state.message.valid) {
+            this.props.sendMessage(this.state.message.value);
+            this.setState(initialState);
+        }
     };
 
     render() {

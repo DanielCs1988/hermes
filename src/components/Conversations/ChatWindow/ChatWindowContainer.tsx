@@ -3,6 +3,7 @@ import {AppActions, AppState, ChatHistory} from "../../../store/types";
 import ChatWindow from "./ChatWindow";
 import {Dispatch} from "redux";
 import {Actions} from "../../../store/actions/conversations";
+import {IMessage} from "../../../shared/models";
 
 const messages: ChatHistory = {
     'asd': [
@@ -37,10 +38,16 @@ const messages: ChatHistory = {
     ]
 };
 
-const mapStateToProps = ({ conversations: { messages, error }, }: AppState) => ({ messages, error });
+const mapStateToProps = ({
+    conversations: { messages },
+    people: { currentUser }
+}: AppState) => ({
+    messages, currentUser
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<AppActions>) => ({
-    fetchMessages: () => dispatch(Actions.fetchMessagesSuccess(messages))
+    fetchMessages: () => dispatch(Actions.fetchMessagesSuccess(messages)),
+    sendMessage: (message: IMessage) => dispatch(Actions.createMessageOptRes(message))
 });
 export type ChatWindowDispatchers = ReturnType<typeof mapDispatchToProps>;
 

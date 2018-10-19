@@ -36,7 +36,7 @@ const EventDetails = ({ navigation, deleteEvent }: Props) => {
                     <NBText>Update</NBText>
                 </Button>
                 <Button rounded bordered danger
-                        onPress={deleteEvent}>
+                        onPress={() => deleteEvent(event)}>
                     <NBText>Delete</NBText>
                 </Button>
             </View>

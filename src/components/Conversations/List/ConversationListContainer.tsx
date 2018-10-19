@@ -30,8 +30,8 @@ const conversations: IConversation[] = [
     },
 ];
 
-const mapStateToProps = ({ conversations: { conversations, error, fetched, loading } }: AppState) => ({
-    conversations, error, fetched, loading
+const mapStateToProps = ({ conversations: { conversations, fetched, loading } }: AppState) => ({
+    conversations, fetched, loading
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppActions>) => ({
