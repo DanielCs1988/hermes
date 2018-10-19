@@ -3,8 +3,8 @@ import { createBottomTabNavigator, createDrawerNavigator } from "react-navigatio
 import {Routes} from "./constants";
 import SideDrawer from "../components/UI/SideDrawer/SideDrawer";
 import TabBar from "../components/UI/TabBar/TabBar";
-import EventNavigator from "../components/Events";
-import PeopleNavigator from "../components/People";
+import EventNavigator from "../components/Event";
+import PeopleNavigator from "../components/Profile";
 import ChatNavigator from "../components/Conversations";
 
 const TabNavigator = createBottomTabNavigator(

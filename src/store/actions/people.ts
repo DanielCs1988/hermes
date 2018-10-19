@@ -1,5 +1,5 @@
 import {ActionsUnion, createAction} from "../action-creator";
-import {IPeople, RollbackError} from "../types";
+import {IPeople} from "../types";
 import {IPerson} from "../../shared/models";
 
 export enum ActionTypes {
@@ -11,9 +11,9 @@ export enum ActionTypes {
 
 export const Actions = {
     fetchPeopleSuccess: (people: IPeople) => createAction(ActionTypes.FETCH_PEOPLE_SUCCESS, people),
-    fetchPeopleFailed: (reason: string) => createAction(ActionTypes.FETCH_PEOPLE_FAILED, reason),
+    fetchPeopleFailed: () => createAction(ActionTypes.FETCH_PEOPLE_FAILED),
     updateProfileSuccess: (profile: IPerson) => createAction(ActionTypes.UPDATE_PROFILE_SUCCESS, profile),
-    updateProfileFailed: (rollback: RollbackError<IPerson>) => createAction(ActionTypes.UPDATE_PROFILE_FAILED, rollback)
+    updateProfileFailed: (rollback: IPerson) => createAction(ActionTypes.UPDATE_PROFILE_FAILED, rollback)
 };
 
 export type PeopleActions = ActionsUnion<typeof Actions>;

@@ -3,18 +3,17 @@ import {PeopleActions} from "./actions/people";
 import {ConversationActions} from "./actions/conversations";
 import {EventActions} from "./actions/events";
 import {AuthActions} from "./actions/auth";
+import {GlobalActions} from "./actions/global";
 
 export interface Loadable {
     loading: boolean;
-    error: string | null;
 }
 export interface FetchedData extends Loadable {
     fetched: boolean;
 }
 
-export interface RollbackError<P> {
-    error: string;
-    item: P;
+export interface GlobalState {
+    error: string | null;
 }
 
 export interface IPeople {
@@ -42,10 +41,11 @@ export interface AuthState extends Loadable {
 }
 
 export interface AppState {
+    global: GlobalState;
     people: PeopleState;
     conversations: ConversationState;
     events: EventState;
     auth: AuthState;
 }
 
-export type AppActions = PeopleActions | ConversationActions | EventActions | AuthActions;
+export type AppActions = GlobalActions | PeopleActions | ConversationActions | EventActions | AuthActions;

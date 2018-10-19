@@ -4,7 +4,6 @@ import {EventState} from "../types";
 const initialState: EventState = {
     events: [],
     loading: false,
-    error: null,
     fetched: false
 };
 
@@ -20,7 +19,6 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
         case ActionTypes.FETCH_EVENTS_FAILED:
             return {
                 ...state,
-                error: action.payload,
                 loading: false
             };
         case ActionTypes.CREATE_EVENT_SUCCESS:
@@ -32,8 +30,7 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
             // TODO: add UNIQUE dummy ID to newly created event!
             return {
                 ...state,
-                error: action.payload.error,
-                events: state.events.filter(event => event.id !== action.payload.item)
+                events: state.events.filter(event => event.id !== action.payload)
             };
         case ActionTypes.UPDATE_EVENT_SUCCESS:
             return {
@@ -48,10 +45,9 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
         case ActionTypes.UPDATE_EVENT_FAILED:
             return {
                 ...state,
-                error: action.payload.error,
                 events: state.events.map(event => {
-                    if (event.id === action.payload.item.id) {
-                        return action.payload.item;
+                    if (event.id === action.payload.id) {
+                        return action.payload;
                     }
                     return event;
                 })
@@ -64,8 +60,7 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
         case ActionTypes.DELETE_EVENT_FAILED:
             return {
                 ...state,
-                error: action.payload.error,
-                events: [...state.events, action.payload.item]
+                events: [...state.events, action.payload]
             };
         default:
             return state;

@@ -8,7 +8,7 @@ export enum ActionTypes {
 
 export const Actions = {
     authSuccess: (authData: AuthPayload) => createAction(ActionTypes.AUTH_SUCCESS, authData),
-    authFailed: (reason: string) => createAction(ActionTypes.AUTH_FAILED, reason)
+    authFailed: () => createAction(ActionTypes.AUTH_FAILED)
 };
 
 export type AuthActions = ActionsUnion<typeof Actions>;

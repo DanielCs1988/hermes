@@ -1,12 +1,12 @@
 import {createStackNavigator} from "react-navigation";
 import {Routes} from "../../shared/constants";
-import Conversations from "./Conversations";
-import ChatWindow from "./ChatWindow/ChatWindow";
+import ConversationListContainer from "./List/ConversationListContainer";
+import ChatWindowContainer from "./ChatWindow/ChatWindowContainer";
 
 const ChatNavigator = createStackNavigator(
     {
-        [Routes.CONVERSATIONS]: Conversations,
-        [Routes.CHAT_WINDOW]: ChatWindow
+        [Routes.CONVERSATIONS]: ConversationListContainer,
+        [Routes.CHAT_WINDOW]: ChatWindowContainer
     },
     {
         navigationOptions: {

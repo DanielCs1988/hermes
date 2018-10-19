@@ -4,8 +4,7 @@ import {AuthState} from "../types";
 const initialState: AuthState = {
     token: null,
     expiresIn: null,
-    loading: false,
-    error: null
+    loading: false
 };
 
 const authReducer = (state = initialState, action: AuthActions): AuthState => {

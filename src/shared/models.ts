@@ -36,7 +36,7 @@ export interface IMessage extends Entity {
 }
 
 export interface IConversation {
-    with: IPerson;
+    target: IPerson;
     lastMessage: IMessage;
 }
 

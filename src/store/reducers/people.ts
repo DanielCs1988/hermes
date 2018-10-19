@@ -24,7 +24,6 @@ export const initialState: PeopleState = {
         }
     },
     loading: false,
-    error: null,
     fetched: false
 };
 
@@ -40,8 +39,7 @@ const peopleReducer = (state = initialState, action: PeopleActions): PeopleState
         case ActionTypes.FETCH_PEOPLE_FAILED:
             return {
                 ...state,
-                loading: false,
-                error: action.payload
+                loading: false
             };
         case ActionTypes.UPDATE_PROFILE_SUCCESS:
             return {
@@ -54,10 +52,9 @@ const peopleReducer = (state = initialState, action: PeopleActions): PeopleState
         case ActionTypes.UPDATE_PROFILE_FAILED:
             return {
                 ...state,
-                error: action.payload.error,
                 people: {
                     ...state.people,
-                    [action.payload.item.id]: action.payload.item
+                    [action.payload.id]: action.payload
                 }
             };
         default:

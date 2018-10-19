@@ -5,7 +5,6 @@ const initialState: ConversationState = {
     conversations: [],
     messages: {},
     loading: false,
-    error: null,
     fetched: false
 };
 
@@ -21,7 +20,6 @@ const conversationReducer = (state = initialState, action: ConversationActions):
         case ActionTypes.FETCH_CONVERSATIONS_FAILED:
             return {
                 ...state,
-                error: action.payload,
                 loading: false
             };
         case ActionTypes.FETCH_MESSAGES_SUCCESS:
@@ -36,7 +34,6 @@ const conversationReducer = (state = initialState, action: ConversationActions):
         case ActionTypes.FETCH_MESSAGES_FAILED:
             return {
                 ...state,
-                error: action.payload,
                 loading: false
             };
         case ActionTypes.CREATE_MESSAGE_SUCCESS:
@@ -50,11 +47,10 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                 }
             };
         case ActionTypes.CREATE_MESSAGE_FAILED:
-            const rbTarget = action.payload.item.to;
-            const rbId = action.payload.item.id;
+            const rbTarget = action.payload.to;
+            const rbId = action.payload.id;
             return {
                 ...state,
-                error: action.payload.error,
                 messages: {
                     ...state.messages,
                     [rbTarget]: state.messages[rbTarget].filter(msg => msg.id !== rbId)
