@@ -4,6 +4,7 @@ import {IEvent} from "../../shared/models";
 export enum ActionTypes {
     FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS',
     FETCH_EVENTS_FAILED = 'FETCH_EVENTS_FAILED',
+    CREATE_EVENT_OPTRES = 'CREATE_EVENT_OPTRES',
     CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS',
     CREATE_EVENT_FAILED = 'CREATE_EVENT_FAILED',
     UPDATE_EVENT_SUCCESS = 'UPDATE_EVENT_SUCCESS',
@@ -15,7 +16,10 @@ export enum ActionTypes {
 export const Actions = {
     fetchEventsSuccess: (events: IEvent[]) => createAction(ActionTypes.FETCH_EVENTS_SUCCESS, events),
     fetchEventsFailed: () => createAction(ActionTypes.FETCH_EVENTS_FAILED),
-    createEventSuccess: (event: IEvent) => createAction(ActionTypes.CREATE_EVENT_SUCCESS, event),
+    createEventOptRes: (event: IEvent) => createAction(ActionTypes.CREATE_EVENT_OPTRES, event),
+    createEventSuccess: (event: IEvent, optResId: string) => createAction(
+        ActionTypes.CREATE_EVENT_SUCCESS, { event, optResId }
+    ),
     createEventFailed: (rollback: string) => createAction(ActionTypes.CREATE_EVENT_FAILED, rollback),
     updateEventSuccess: (event: IEvent) => createAction(ActionTypes.UPDATE_EVENT_SUCCESS, event),
     updateEventFailed: (rollback: IEvent) => createAction(ActionTypes.UPDATE_EVENT_FAILED, rollback),

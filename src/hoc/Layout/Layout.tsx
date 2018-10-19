@@ -2,9 +2,11 @@ import * as React from 'react';
 import { NavProp } from "../../shared/models";
 import NavBar from "../../components/UI/NavBar/NavBar";
 import {Container, Content} from "native-base";
-import {runIf, showErrorMessage} from "../../shared/utils";
+import {showErrorMessage} from "../../shared/utils";
 import {AppState} from "../../store/types";
 import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {Actions, GlobalActions} from "../../store/actions/global";
 
 type Props = NavProp & {
     title: string;
@@ -12,12 +14,16 @@ type Props = NavProp & {
     padded?: boolean;
     footer?: React.ReactNode;
     children: React.ReactNode;
-    error: string | null;
+    error?: string | null;
+    hideError?: () => void;
 }
 class Layout extends React.Component<Props> {
     componentDidUpdate() {
-        const { error } = this.props;
-        runIf(error, showErrorMessage, error);
+        const { error, hideError } = this.props;
+        if (error && hideError) {
+            showErrorMessage(error);
+            hideError();
+        }
     }
 
     render() {
@@ -33,5 +39,8 @@ class Layout extends React.Component<Props> {
 }
 
 const mapStateToProps = ({ global: { error } }: AppState) => ({ error });
+const mapDispatchToProps = (dispatch: Dispatch<GlobalActions>) => ({
+    hideError: () => dispatch(Actions.clearError())
+});
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

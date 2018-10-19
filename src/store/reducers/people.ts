@@ -23,6 +23,7 @@ export const initialState: PeopleState = {
             profilePicture: { uri: 'https://usercontent2.hubstatic.com/14052231_f520.jpg' }
         }
     },
+    currentUser: null,
     loading: false,
     fetched: false
 };
@@ -40,6 +41,11 @@ const peopleReducer = (state = initialState, action: PeopleActions): PeopleState
             return {
                 ...state,
                 loading: false
+            };
+        case ActionTypes.GET_CURRENT_USER_ID_SUCCESS:
+            return {
+                ...state,
+                currentUser: action.payload
             };
         case ActionTypes.UPDATE_PROFILE_SUCCESS:
             return {
@@ -64,6 +70,10 @@ const peopleReducer = (state = initialState, action: PeopleActions): PeopleState
 
 export const getPerson = (id: string) => ({ people: { people } }: AppState): IPerson => {
     return people[id];
+};
+
+export const getCurrentUser = () => ({ people: { people, currentUser } }: AppState): IPerson | null => {
+    return currentUser ? people[currentUser] : null;
 };
 
 export default peopleReducer;

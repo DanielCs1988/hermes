@@ -21,10 +21,21 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
                 ...state,
                 loading: false
             };
-        case ActionTypes.CREATE_EVENT_SUCCESS:
+        case ActionTypes.CREATE_EVENT_OPTRES:
             return {
                 ...state,
                 events: [...state.events, action.payload]
+            };
+        case ActionTypes.CREATE_EVENT_SUCCESS:
+            const optResId = action.payload.optResId;
+            return {
+                ...state,
+                events: state.events.map(event => {
+                    if (event.id === optResId) {
+                        return action.payload.event;
+                    }
+                    return event;
+                })
             };
         case ActionTypes.CREATE_EVENT_FAILED:
             // TODO: add UNIQUE dummy ID to newly created event!

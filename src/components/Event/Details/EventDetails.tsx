@@ -12,7 +12,7 @@ import {EventDetailsDispatcher} from "./EventDetailsContainer";
 type Props = NavProp & EventDetailsDispatcher;
 const EventDetails = ({ navigation, deleteEvent }: Props) => {
     const event: IEvent = navigation.getParam('event', {});
-    const { id, image, title, location, from, to, description, organizer } = event;
+    const { image, title, location, from, to, description, organizer } = event;
     return (
         <Layout navigation={navigation} title="Event Details" back>
             <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
@@ -36,7 +36,7 @@ const EventDetails = ({ navigation, deleteEvent }: Props) => {
                     <NBText>Update</NBText>
                 </Button>
                 <Button rounded bordered danger
-                        onPress={() => deleteEvent(id)}>
+                        onPress={deleteEvent}>
                     <NBText>Delete</NBText>
                 </Button>
             </View>

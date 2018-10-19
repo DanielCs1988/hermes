@@ -36,7 +36,7 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                 ...state,
                 loading: false
             };
-        case ActionTypes.CREATE_MESSAGE_SUCCESS:
+        case ActionTypes.CREATE_MESSAGE_OPTRES:
             // TODO: messages arriving on the channel should have their swapped: from is the target
             const target = action.payload.to;
             return {
@@ -44,6 +44,21 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                 messages: {
                     ...state.messages,
                     [target]: [ ...state.messages[target], action.payload ]
+                }
+            };
+        case ActionTypes.CREATE_MESSAGE_SUCCESS:
+            const msgTarget = action.payload.message.to;
+            const optResId = action.payload.optResId;
+            return {
+                ...state,
+                messages: {
+                    ...state.messages,
+                    [msgTarget]: state.messages[msgTarget].map(message => {
+                        if (message.id === optResId) {
+                            return action.payload.message;
+                        }
+                        return message;
+                    })
                 }
             };
         case ActionTypes.CREATE_MESSAGE_FAILED:

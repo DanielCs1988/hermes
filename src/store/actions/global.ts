@@ -1,6 +1,6 @@
 import {ActionsUnion, createAction} from "../action-creator";
 
-export const enum ActionTypes {
+export enum ActionTypes {
     SHOW_ERROR = 'SHOW_ERROR',
     CLEAR_ERROR = 'CLEAR_ERROR'
 }
