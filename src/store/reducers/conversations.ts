@@ -5,11 +5,18 @@ export const initialState: ConversationState = {
     conversations: [],
     messages: {},
     loading: false,
-    fetched: false
+    fetched: false,
+    currentTarget: null
 };
 
 const conversationReducer = (state = initialState, action: ConversationActions): ConversationState => {
     switch (action.type) {
+        case ActionTypes.INIT_FETCH_CONVERSATIONS:
+        case ActionTypes.INIT_FETCH_MESSAGES:
+            return {
+                ...state,
+                loading: true
+            };
         case ActionTypes.FETCH_CONVERSATIONS_SUCCESS:
             return {
                 ...state,
@@ -21,6 +28,11 @@ const conversationReducer = (state = initialState, action: ConversationActions):
             return {
                 ...state,
                 loading: false
+            };
+        case ActionTypes.SELECT_TARGET:
+            return {
+                ...state,
+                currentTarget: action.payload
             };
         case ActionTypes.FETCH_MESSAGES_SUCCESS:
             return {

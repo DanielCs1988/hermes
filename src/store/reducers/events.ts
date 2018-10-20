@@ -98,8 +98,8 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
     }
 };
 
-export const getEvent = (id: string) => ({ events: { events } }: AppState) => {
-    return events.find(event => event.id === id);
+export const getSelectedEvent = ({ events: { selectedEvent } }: AppState) => {
+    return selectedEvent;
 };
 
 export default eventReducer;

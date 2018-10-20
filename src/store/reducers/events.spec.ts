@@ -1,4 +1,4 @@
-import reducer, {getEvent, initialState} from "./events";
+import reducer, {getSelectedEvent, initialState} from "./events";
 import { Actions, EventActions } from "../actions/events";
 import { EventState } from "../types";
 import {event1, event2, events} from "./seed";
@@ -162,11 +162,11 @@ describe('Events Reducer', () => {
         });
     });
 
-    describe('when using the getEvent selector', () => {
-        it('should return the correct event', () => {
+    describe('when using the getSelectedEvent selector', () => {
+        it('should return the selected event', () => {
             // @ts-ignore
-            expect(getEvent(event2.id)({
-                events: { ...defaultState, events: [event1, event2] }
+            expect(getSelectedEvent({
+                events: { ...defaultState, selectedEvent: event2 }
             })).toEqual(event2);
         });
     });

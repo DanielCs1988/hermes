@@ -17,7 +17,7 @@ class ConversationList extends React.Component<Props> {
     }
 
     render() {
-        const { navigation, conversations, loading } = this.props;
+        const { navigation, conversations, loading, selectConversation } = this.props;
         return (
             <Layout navigation={navigation} title="Conversations">
                 <Loader loading={loading}>
@@ -25,7 +25,11 @@ class ConversationList extends React.Component<Props> {
                         data={conversations}
                         keyExtractor={conversation => conversation.target.id}
                         renderItem={({ item }) => (
-                            <ConversationListItem navigation={navigation} conversation={item} />
+                            <ConversationListItem
+                                navigation={navigation}
+                                conversation={item}
+                                onSelect={() => selectConversation(item.target)}
+                            />
                         )}
                     />
                 </Loader>

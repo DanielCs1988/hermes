@@ -5,6 +5,7 @@ import {IForm, NavProp, IPerson} from "../../../shared/models";
 import {PlatformIcon} from "../../../shared/utils";
 import {Image} from "react-native";
 import ProfileUpdateForm from "./Form/ProfileUpdateForm";
+import {ProfileUpdateDispatchers} from "./ProfileUpdateContainer";
 
 const formDefault = {
     value: '',
@@ -22,10 +23,13 @@ const initialState = {
     }
 };
 type State = Readonly<IForm>;
-class ProfileUpdate extends React.Component<NavProp, State> {
-    constructor(props: NavProp) {
+type Props = NavProp & ProfileUpdateDispatchers & {
+    profile: IPerson | null;
+}
+class ProfileUpdate extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
-        const person = props.navigation.getParam('person', {});
+        const person = props.profile || {};
         this.state = {
             ...initialState,
             ...Object.keys(person)
@@ -59,12 +63,27 @@ class ProfileUpdate extends React.Component<NavProp, State> {
     };
 
     private submitHandler = () => {
-        alert('Form sent!');
+        if (this.checkValidity()) {
+            const updatedProfile = Object.keys(this.state)
+                .map(key => ({
+                    [key]: this.state[key].value
+                }))
+                .reduce((a, b) => ({...a, ...b}), {});
+            this.props.updateProfile({
+                ...this.props.profile!,
+                ...updatedProfile
+            });
+        }
+    };
+
+    private checkValidity = () => {
+        return Object.values(this.state)
+            .map(field => field.valid)
+            .every(valid => valid);
     };
 
     render() {
-        const { navigation } = this.props;
-        const person: IPerson = navigation.getParam('person', {});
+        const { navigation, profile } = this.props;
         return (
             <Layout navigation={navigation} title="Update Profile" back>
                 <Row>
@@ -81,19 +100,21 @@ class ProfileUpdate extends React.Component<NavProp, State> {
                         </Button>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <Image source={person.profilePicture} style={{ height: 150, width: '100%' }} />
-                    </Col>
-                    <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Button iconLeft info bordered
-                                style={{ alignSelf: 'center' }}
-                                onPress={() => alert('Update image...')}>
-                            <Icon name={PlatformIcon('brush')} />
-                            <Text>Change Picture</Text>
-                        </Button>
-                    </Col>
-                </Row>
+                {
+                    profile && <Row>
+                        <Col>
+                            <Image source={profile.profilePicture} style={{ height: 150, width: '100%' }} />
+                        </Col>
+                        <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Button iconLeft info bordered
+                                    style={{ alignSelf: 'center' }}
+                                    onPress={() => alert('Update image...')}>
+                                <Icon name={PlatformIcon('brush')} />
+                                <Text>Change Picture</Text>
+                            </Button>
+                        </Col>
+                    </Row>
+                }
                 <ProfileUpdateForm
                     fields={this.state}
                     changeHandler={this.changeHandler}

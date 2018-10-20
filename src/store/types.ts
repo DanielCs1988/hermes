@@ -21,6 +21,7 @@ export interface IPeople {
 }
 export interface PeopleState extends FetchedData {
     people: IPeople;
+    selectedProfile: IPerson | null;
     currentUser: string | null;
 }
 
@@ -30,6 +31,7 @@ export interface ChatHistory {
 export interface ConversationState extends FetchedData {
     conversations: IConversation[];
     messages: ChatHistory;
+    currentTarget: IPerson;
 }
 
 export interface EventState extends FetchedData {

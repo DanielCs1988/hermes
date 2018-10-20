@@ -14,7 +14,7 @@ const TabNavigator = createBottomTabNavigator(
         [Routes.CHAT_STACK]: ChatNavigator
     },
     {
-        initialRouteName: Routes.EVENT_STACK,
+        initialRouteName: Routes.PEOPLE_STACK,
         tabBarComponent: props => <TabBar {...props} />,
         navigationOptions: ({ navigation: { state } }) => ({
             tabBarVisible: state.index === 0

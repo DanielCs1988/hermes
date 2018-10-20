@@ -8,22 +8,25 @@ import ProfileListItem from "./Item/ProfileListItem";
 import {Routes} from "../../../shared/constants";
 import Loader from "../../../hoc/Loader/Loader";
 import {FetchedData} from "../../../store/types";
+import {ProfileListDispatchers} from "./ProfileListContainer";
 
-type Props = NavProp & FetchedData & {
+type Props = NavProp & FetchedData & ProfileListDispatchers & {
     people: IPerson[];
-    fetchPeople: () => void;
 };
 class ProfileList extends React.Component<Props> {
     private readonly source = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    // componentDidMount() {
-    //     runIf(!this.props.fetched, this.props.fetchPeople);
-    // }
+    componentDidMount() {
+        if (!this.props.fetched) {
+            this.props.fetchPeople();
+            this.props.getCurrentUser();
+        }
+    }
 
     render() {
-        const { navigation, people, loading } = this.props;
+        const { navigation, people, loading, selectProfile, selectTarget } = this.props;
         return (
             <Layout navigation={navigation} title="People">
                 <Loader loading={loading}>
@@ -32,13 +35,18 @@ class ProfileList extends React.Component<Props> {
                         rightOpenValue={-75}
                         disableRightSwipe
                         renderRightHiddenRow={person => (
-                            <Button full info onPress={() => {
-                                navigation.navigate(Routes.PROFILE, { person });
+                            <Button info onPress={() => {
+                                selectProfile(person);  // TODO: RACE CONDITION!
+                                navigation.navigate(Routes.PROFILE);
                             }}>
                                 <Icon name={PlatformIcon('person')}/>
                             </Button>
                         )}
-                        renderRow={person => <ProfileListItem person={person} navigation={navigation} />}
+                        renderRow={person => <ProfileListItem
+                            person={person}
+                            navigation={navigation}
+                            onSelect={() => selectTarget(person)}
+                        />}
                     />
                 </Loader>
             </Layout>

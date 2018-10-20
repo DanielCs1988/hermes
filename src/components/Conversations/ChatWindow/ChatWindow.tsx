@@ -1,46 +1,44 @@
 import * as React from 'react';
-import {NavProp} from "../../../shared/models";
+import {IPerson, NavProp} from "../../../shared/models";
 import {FlatList} from "react-native";
 import ChatMessage from "./Message/ChatMessage";
 import ChatForm from "./Form/ChatForm";
 import Layout from "../../../hoc/Layout/Layout";
-import {ChatHistory} from "../../../store/types";
 import {ChatWindowDispatchers} from "./ChatWindowContainer";
-import {runIf} from "../../../shared/utils";
 import Loader from "../../../hoc/Loader/Loader";
+import {ChatHistory} from "../../../store/types";
 
 type Props = NavProp & ChatWindowDispatchers & {
     messages: ChatHistory;
     currentUser: string | null;
+    currentTarget: IPerson;
 }
 class ChatWindow extends React.Component<Props> {
     componentDidMount() {
-        const { navigation, fetchMessages, messages } = this.props;
-        const { id } = navigation.getParam('person', {});
-        runIf(
-            id && !messages.hasOwnProperty(id),
-            fetchMessages, id
-        );
+        const { fetchMessages, messages, currentTarget } = this.props;
+        if (currentTarget && messages && !messages.hasOwnProperty(currentTarget.id)) {
+            fetchMessages(currentTarget.id);
+        }
     }
 
     render() {
-        const { navigation, messages, currentUser, sendMessage } = this.props;
-        const { id, givenName, profilePicture } = navigation.getParam('person', {});
-        const chatHistory = messages[id];
+        const { navigation, messages, currentUser, currentTarget, sendMessage } = this.props;
+        const target = currentTarget || {} as IPerson;
+        const history = messages[currentTarget.id];
         return (
             <Layout back
                     navigation={navigation}
-                    title={givenName || 'Chat'}
-                    footer={<ChatForm sendMessage={content => sendMessage({ content, to: id })} />}>
-                <Loader loading={!chatHistory}>
+                    title={target.givenName || 'Chat'}
+                    footer={<ChatForm sendMessage={content => sendMessage({ content, to: target.id })} />}>
+                <Loader loading={!history}>
                     <FlatList
-                        data={chatHistory}
-                        keyExtractor={message => message.id!}
+                        data={history}
+                        keyExtractor={message => message.id}
                         renderItem={({ item }) => (
                             <ChatMessage
                                 message={item}
                                 currentUser={currentUser}
-                                targetAvatar={profilePicture}/>
+                                targetAvatar={target.profilePicture}/>
                         )}
                     />
                 </Loader>

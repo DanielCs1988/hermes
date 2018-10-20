@@ -8,7 +8,7 @@
     "downlevelIteration": true,
     "strict": true,
     "noImplicitAny": false,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,

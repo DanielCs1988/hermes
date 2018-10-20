@@ -14,7 +14,7 @@ export interface IForm {
 }
 
 export interface Entity {
-    id: string;
+    id?: string;
 }
 
 export interface IPerson extends Entity {

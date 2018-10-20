@@ -2,8 +2,8 @@ import {put, select, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/events";
 import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
-import {getCurrentUser, initialState as people} from "../reducers/people";
-import {getEvent} from "../reducers/events";
+import { getSelectedEvent } from "../reducers/events";
+import {getCurrentUser, getPerson} from "../reducers/people";
 
 export const events: IEvent[] = [
     {
@@ -19,8 +19,10 @@ export const events: IEvent[] = [
             latitude: 47.4924430302,
             longitude: 19.0527914555
         },
-        organizer: people.people['asd'],
-        participants: [people.people['asd'], people.people['qrt']]
+        // @ts-ignore
+        organizer: 'asd',
+        // @ts-ignore
+        participants: ['asd', 'qrt']
     },
     {
         id: 'id2',
@@ -35,14 +37,16 @@ export const events: IEvent[] = [
             latitude: -40.3434234234,
             longitude: 65.4324234423
         },
-        organizer: people.people['qrt'],
-        participants: [people.people['asd'], people.people['qrt']]
+        // @ts-ignore
+        organizer: 'qrt',
+        // @ts-ignore
+        participants: ['asd', 'qrt']
     }
 ];
 
 // TODO: Redirects after stuff
 
-export function* eventSagas() {
+function* eventSagas() {
     yield takeLatest(ActionTypes.INIT_FETCH_EVENTS, fetchEvents);
     yield takeLatest(ActionTypes.INIT_SELECT_EVENT, selectEvent);
     yield takeLatest(ActionTypes.INIT_CREATE_EVENT_FORM, initCreateEventForm);
@@ -53,7 +57,19 @@ export function* eventSagas() {
 
 export function* fetchEvents() {
     try {
-        yield put(Actions.fetchEventsSuccess(events));
+        const people = {
+            'asd': yield select(getPerson('asd')),
+            'qrt': yield select(getPerson('qrt'))
+        };
+        yield put(Actions.fetchEventsSuccess(
+            events.map(event => ({
+                ...event,
+                // @ts-ignore
+                organizer: people[event.organizer],
+                // @ts-ignore
+                participants: event.participants.map(participant => people[participant])
+            }))
+        ));
     } catch (e) {
         yield put(Actions.fetchEventsFailed());
         yield put(GlobalActions.showError(e.message));
@@ -87,7 +103,7 @@ export function* createEvent(action) {
 
 export function* updateEvent(action) {
     const updatedEvent = action.payload;
-    const oldEvent = yield select(getEvent(updatedEvent.id));
+    const oldEvent = yield select(getSelectedEvent);
     try {
         yield put(Actions.updateEventSuccess(updatedEvent));
     } catch (e) {
@@ -105,3 +121,5 @@ export function* deleteEvent(action) {
         yield put(GlobalActions.showError(e.message));
     }
 }
+
+export default eventSagas;

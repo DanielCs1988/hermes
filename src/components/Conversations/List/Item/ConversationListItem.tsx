@@ -6,10 +6,14 @@ import moment from "moment";
 
 type Props = NavProp & {
     conversation: IConversation;
+    onSelect: () => void;
 }
-const ConversationListItem = ({ conversation: { target, lastMessage }, navigation }: Props) => (
+const ConversationListItem = ({ conversation: { target, lastMessage }, navigation, onSelect }: Props) => (
     <ListItem avatar
-              onPress={() => navigation.navigate(Routes.CHAT_WINDOW, { person: target })}>
+              onPress={() => {
+                  onSelect();  // TODO: RACE CONDITION!
+                  navigation.navigate(Routes.CHAT_WINDOW);
+              }}>
         <Left>
             <Thumbnail source={target.profilePicture} />
         </Left>
