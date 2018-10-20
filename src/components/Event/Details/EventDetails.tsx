@@ -9,17 +9,18 @@ import {Routes} from "../../../shared/constants";
 import styles from "./EventDetails.styles";
 import {EventDetailsDispatcher} from "./EventDetailsContainer";
 
-type Props = NavProp & EventDetailsDispatcher;
-const EventDetails = ({ navigation, deleteEvent }: Props) => {
-    const event: IEvent = navigation.getParam('event', {});
+type Props = NavProp & EventDetailsDispatcher & {
+    event: IEvent;
+}
+const EventDetails = ({ navigation, deleteEvent, event }: Props) => {
     const { image, title, location, from, to, description, organizer } = event;
     return (
         <Layout navigation={navigation} title="Event Details" back>
             <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
             <View style={styles.row}>
                 <View style={styles.leftCol}>
-                    <Text style={styles.monthAbbr}>Nov</Text>
-                    <Text style={styles.dayAbbr}>18</Text>
+                    <Text style={styles.monthAbbr}>{moment(from).format('MMM')}</Text>
+                    <Text style={styles.dayAbbr}>{moment(from).format('D')}</Text>
                 </View>
                 <View style={styles.rightCol}>
                     <H2>{title}</H2>
@@ -32,11 +33,14 @@ const EventDetails = ({ navigation, deleteEvent }: Props) => {
                     <NBText>Join</NBText>
                 </Button>
                 <Button rounded bordered
-                        onPress={() => navigation.navigate(Routes.EDIT_EVENT, { event })}>
+                        onPress={() => navigation.navigate(Routes.EDIT_EVENT)}>
                     <NBText>Update</NBText>
                 </Button>
                 <Button rounded bordered danger
-                        onPress={() => deleteEvent(event)}>
+                        onPress={() => {
+                            deleteEvent(event);
+                            navigation.goBack();
+                        }}>
                     <NBText>Delete</NBText>
                 </Button>
             </View>
@@ -53,8 +57,12 @@ const EventDetails = ({ navigation, deleteEvent }: Props) => {
                     <Icon name={PlatformIcon('time')}/>
                 </View>
                 <View style={styles.rightCol}>
-                    <NBText>From: {moment(from).format('llll')}</NBText>
-                    <NBText>To: {moment(to).format('llll')}</NBText>
+                    <NBText style={styles.dateText}>
+                        From: {moment(from).format('dddd, YYYY. MMMM D. H:mm')}
+                    </NBText>
+                    <NBText style={styles.dateText}>
+                        To: {moment(to).format('dddd, YYYY. MMMM D. H:mm')}
+                    </NBText>
                 </View>
             </View>
             <NBText style={{ padding: 10 }}>Lots of people will be there!</NBText>

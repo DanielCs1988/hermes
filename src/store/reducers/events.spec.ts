@@ -55,14 +55,34 @@ describe('Events Reducer', () => {
         });
     });
 
+    describe('when selecting an event', () => {
+        const action = Actions.selectEvent(event1);
+
+        it('should save the selected event id to the state', () => {
+            expect(reducer(defaultState, action)).toEqual({
+                ...defaultState, selectedEvent: event1
+            });
+        });
+    });
+
+    describe('when clearing event selection', () => {
+        const action = Actions.clearSelection();
+
+        it('should set the selected event to null', () => {
+            expect(reducer({
+                ...defaultState, selectedEvent: event1
+            }, action)).toEqual(defaultState);
+        });
+    });
+
     describe('creating optimistic response for a new event', () => {
         const action = Actions.createEventOptRes(event1);
 
-        it('should add it to the list of events', () => {
+        it('should add it to the list of events and the selected event', () => {
             expect(reducer({
-                ...defaultState, events: [event2]
+                ...defaultState, events: [event2], selectedEvent: null
             }, action)).toEqual({
-                ...defaultState, events: [event2, event1]
+                ...defaultState, events: [event2, event1], selectedEvent: event1
             });
         });
     });
@@ -71,11 +91,11 @@ describe('Events Reducer', () => {
         const realEvent = { ...event1, id: 'realId', createdAt: 12345 };
         const action = Actions.createEventSuccess(realEvent, event1.id);
 
-        it('should overwrite the optimistic response with the real event', () => {
+        it('should overwrite the optimistic response with the real event in both the list and the selected event', () => {
             expect(reducer({
-                ...defaultState, events: [event2, event1]
+                ...defaultState, events: [event2, event1], selectedEvent: event1
             }, action)).toEqual({
-                ...defaultState, events: [event2, realEvent]
+                ...defaultState, events: [event2, realEvent], selectedEvent: realEvent
             })
         });
     });
@@ -96,11 +116,11 @@ describe('Events Reducer', () => {
         const updatedEvent = { ...event2, title: 'changed', from: 123, to: 456 };
         const action = Actions.updateEventSuccess(updatedEvent);
 
-        it('should update the correct event', () => {
+        it('should update the events list and the selected event', () => {
             expect(reducer({
-                ...defaultState, events: [event1, event2]
+                ...defaultState, events: [event1, event2], selectedEvent: event2
             }, action)).toEqual({
-                ...defaultState, events: [event1, updatedEvent]
+                ...defaultState, events: [event1, updatedEvent], selectedEvent: updatedEvent
             });
         });
     });
@@ -111,9 +131,9 @@ describe('Events Reducer', () => {
 
         it('should revert changes made in the optimistic response', () => {
             expect(reducer({
-                ...defaultState, events: [event1, updatedEvent]
+                ...defaultState, events: [event1, updatedEvent], selectedEvent: updatedEvent
             }, action)).toEqual({
-                ...defaultState, events: [event1, event2]
+                ...defaultState, events: [event1, event2], selectedEvent: event2
             });
         });
     });

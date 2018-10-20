@@ -4,44 +4,55 @@ import EventListItem from "./Item/EventListItem";
 import NavBar from "../../UI/NavBar/NavBar";
 import {View} from "react-native";
 import {PlatformIcon, runIf} from "../../../shared/utils";
-import {Routes} from "../../../shared/constants";
-import {NavProp} from "../../../shared/models";
-import {EventState} from "../../../store/types";
+import {IEvent, NavProp} from "../../../shared/models";
+import {FetchedData} from "../../../store/types";
 import Loader from "../../../hoc/Loader/Loader";
+import {EventListDispatchers} from "./EventListContainer";
+import WithGlobalState from "../../../hoc/WithErrorHandling/WithErrorHandling";
+import {Routes} from "../../../shared/constants";
 
-type Props = NavProp & EventState & {
-    fetchEvents: () => void;
+type Props = NavProp & FetchedData & EventListDispatchers & {
+    events: IEvent[];
 };
+
 class EventList extends React.Component<Props> {
     componentDidMount() {
         runIf(!this.props.fetched, this.props.fetchEvents);
     }
 
     render() {
-        const { navigation, events, loading } = this.props;
+        const { navigation, events, loading, initForm, selectEvent } = this.props;
         return (
-            <Container>
-                <NavBar navigation={navigation} title="Events" />
-                <View style={{ padding: 10 }}>
-                    <Loader loading={loading}>
-                    {
-                        events.length > 0 &&
-                        <DeckSwiper
-                            dataSource={events}
-                            renderItem={event => (
-                                <EventListItem
-                                    event={event}
-                                    navigation={navigation}
+            <WithGlobalState>
+                <Container>
+                    <NavBar navigation={navigation} title="Events" />
+                    <View style={{ padding: 10 }}>
+                        <Loader loading={loading}>
+                            {
+                                events.length > 0 &&
+                                <DeckSwiper
+                                    dataSource={events}
+                                    renderItem={event => (
+                                        <EventListItem
+                                            event={event}
+                                            onSelect={() => {
+                                                selectEvent(event);
+                                                navigation.navigate(Routes.EVENT_DETAILS);
+                                            }}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                    }
-                    </Loader>
-                </View>
-                <Fab onPress={() => navigation.navigate(Routes.NEW_EVENT)} position="bottomRight">
-                    <Icon name={PlatformIcon('create')} />
-                </Fab>
-            </Container>
+                            }
+                        </Loader>
+                    </View>
+                    <Fab onPress={() => {
+                        initForm();
+                        navigation.navigate(Routes.NEW_EVENT);
+                    }} position="bottomRight">
+                        <Icon name={PlatformIcon('create')} />
+                    </Fab>
+                </Container>
+            </WithGlobalState>
         );
     }
 }

@@ -11,7 +11,8 @@ export enum Routes {
     EDIT_PROFILE = 'EditProfile',
     CHAT_STACK = 'ChatStack',
     CONVERSATIONS = 'Conversations',
-    CHAT_WINDOW = 'ChatWindow'
+    CHAT_WINDOW = 'ChatWindow',
+    BACK = 'Back'
 }
 
 export enum StorageKeys {

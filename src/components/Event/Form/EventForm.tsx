@@ -14,30 +14,31 @@ const initialState = {
     from: null,
     to: null,
     image: null,
-    location: null,
-    isNewEvent: false
+    location: null
 };
-type Props = NavProp & EventFormDispatchers;
+type Props = NavProp & EventFormDispatchers & {
+    event: IEvent | null;
+};
 class EventForm extends React.Component<Props, any> {
     constructor(props) {
         super(props);
-        const event: IEvent = props.navigation.getParam('event', {});
+        const event = props.event || {};
         this.state = {
             ...initialState,
-            ...event,
-            isNewEvent: event.title === undefined
+            ...event
         };
     }
 
     private submitHandler = () => {
         if (this.validateForm()) {
-            const { isNewEvent, ...event } = this.state;
+            const event = { ...this.state };
             chooseBetween(
-                this.state.isNewEvent,
-                this.props.createEvent,
+                this.props.event,  // This is null (thus false) when creating a new event.
                 this.props.updateEvent,
+                this.props.createEvent,
                 event
             );
+            this.props.navigation.pop();
         }
     };
 
@@ -48,7 +49,8 @@ class EventForm extends React.Component<Props, any> {
     };
 
     render() {
-        const { title, description, from, to, image, location, isNewEvent } = this.state;
+        const { title, description, from, to, image, location } = this.state;
+        const isNewEvent = !this.props.event;
         return (
             <Layout back
                 navigation={this.props.navigation}

@@ -6,6 +6,11 @@ export enum ActionTypes {
     FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS',
     FETCH_EVENTS_FAILED = 'FETCH_EVENTS_FAILED',
 
+    INIT_SELECT_EVENT = 'INIT_SELECT_EVENT',
+    SELECT_EVENT = 'SELECT_EVENT',
+    CLEAR_SELECTION = 'CLEAR_SELECTION',
+
+    INIT_CREATE_EVENT_FORM = 'INIT_CREATE_EVENT_FORM',
     INIT_CREATE_EVENT = 'INIT_CREATE_EVENT',
     CREATE_EVENT_OPTRES = 'CREATE_EVENT_OPTRES',
     CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS',
@@ -25,6 +30,11 @@ export const Actions = {
     fetchEventsSuccess: (events: IEvent[]) => createAction(ActionTypes.FETCH_EVENTS_SUCCESS, events),
     fetchEventsFailed: () => createAction(ActionTypes.FETCH_EVENTS_FAILED),
 
+    initSelectEvent: (event: IEvent) => createAction(ActionTypes.INIT_SELECT_EVENT, event),
+    selectEvent: (event: IEvent) => createAction(ActionTypes.SELECT_EVENT, event),
+    clearSelection: () => createAction(ActionTypes.CLEAR_SELECTION),
+
+    initCreateEventForm: () => createAction(ActionTypes.INIT_CREATE_EVENT_FORM),
     initCreateEvent: (event: IEvent) => createAction(ActionTypes.INIT_CREATE_EVENT, event),
     createEventOptRes: (event: IEvent) => createAction(ActionTypes.CREATE_EVENT_OPTRES, event),
     createEventSuccess: (event: IEvent, optResId: string) => createAction(

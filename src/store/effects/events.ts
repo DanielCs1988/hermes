@@ -1,5 +1,6 @@
 import {put, select, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/events";
+import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
 import {getCurrentUser, initialState as people} from "../reducers/people";
 import {getEvent} from "../reducers/events";
@@ -43,6 +44,8 @@ export const events: IEvent[] = [
 
 export function* eventSagas() {
     yield takeLatest(ActionTypes.INIT_FETCH_EVENTS, fetchEvents);
+    yield takeLatest(ActionTypes.INIT_SELECT_EVENT, selectEvent);
+    yield takeLatest(ActionTypes.INIT_CREATE_EVENT_FORM, initCreateEventForm);
     yield takeLatest(ActionTypes.INIT_CREATE_EVENT, createEvent);
     yield takeLatest(ActionTypes.INIT_UPDATE_EVENT, updateEvent);
     yield takeLatest(ActionTypes.INIT_DELETE_EVENT, deleteEvent);
@@ -53,10 +56,19 @@ export function* fetchEvents() {
         yield put(Actions.fetchEventsSuccess(events));
     } catch (e) {
         yield put(Actions.fetchEventsFailed());
+        yield put(GlobalActions.showError(e.message));
     }
 }
 
-// TODO: image is optional!
+export function* selectEvent(action) {
+    const event = action.payload;
+    yield put(Actions.selectEvent(event));
+}
+
+export function* initCreateEventForm() {
+    yield put(Actions.clearSelection());
+}
+
 export function* createEvent(action) {
     const organizer = yield select(getCurrentUser);
     const event = {
@@ -69,6 +81,7 @@ export function* createEvent(action) {
         yield put(Actions.createEventOptRes(event));
     } catch (e) {
         yield put(Actions.createEventFailed(''));
+        yield put(GlobalActions.showError(e.message));
     }
 }
 
@@ -78,7 +91,8 @@ export function* updateEvent(action) {
     try {
         yield put(Actions.updateEventSuccess(updatedEvent));
     } catch (e) {
-        yield put(Actions.updateEventFailed(oldEvent))
+        yield put(Actions.updateEventFailed(oldEvent));
+        yield put(GlobalActions.showError(e.message));
     }
 }
 
@@ -88,5 +102,6 @@ export function* deleteEvent(action) {
         yield put(Actions.deleteEventSuccess(event.id));
     } catch (e) {
         yield put(Actions.deleteEventFailed(event));
+        yield put(GlobalActions.showError(e.message));
     }
 }

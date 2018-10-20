@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     dayAbbr: {
         fontWeight: 'bold',
         fontSize: 20
+    },
+    dateText: {
+        fontSize: 14
     }
 });
 

@@ -17,9 +17,9 @@ export const showErrorMessage = (text: string) => {
 
 export const chooseBetween = (condition: any, func1: Function, func2: Function, ...args: any[]) => {
     if (condition) {
-        func1(...args);
+        return func1(...args);
     } else {
-        func2(...args);
+        return func2(...args);
     }
 };
 

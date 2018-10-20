@@ -34,6 +34,7 @@ export interface ConversationState extends FetchedData {
 
 export interface EventState extends FetchedData {
     events: IEvent[];
+    selectedEvent: IEvent | null;
 }
 
 export interface AuthState extends Loadable {
