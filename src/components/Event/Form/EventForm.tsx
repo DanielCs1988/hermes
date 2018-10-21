@@ -7,6 +7,7 @@ import Layout from "../../../hoc/Layout/Layout";
 import {Button, Input, Item, Text, Textarea} from "native-base";
 import {chooseBetween} from "../../../shared/utils";
 import {EventFormDispatchers} from "./EventFormContainer";
+import {Routes} from "../../../shared/constants";
 
 const initialState = {
     title: null,
@@ -38,7 +39,8 @@ class EventForm extends React.Component<Props, any> {
                 this.props.createEvent,
                 event
             );
-            this.props.navigation.pop();
+            this.props.navigation.popToTop({ immediate: true });
+            this.props.navigation.navigate(Routes.EVENT_DETAILS);
         }
     };
 
