@@ -2,7 +2,8 @@ import * as React from 'react';
 import {Button, H2, Icon, Text as NBText} from "native-base";
 import {IEvent as IEvent, NavProp} from "../../../shared/models";
 import Layout from "../../../hoc/Layout/Layout";
-import {Image, Text, View} from "react-native";
+import {Text, View} from "react-native";
+import { CachedImage } from 'react-native-cached-image';
 import {PlatformIcon} from "../../../shared/utils";
 import moment from 'moment';
 import {Routes} from "../../../shared/constants";
@@ -19,7 +20,7 @@ const EventDetails = ({ navigation, deleteEvent, toggleParticipation, event, cur
         const participating = !!participants.find(user => user.id === currentUser);
         return (
             <Layout navigation={navigation} title="Event Details" back>
-                <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
+                <CachedImage source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
                 <View style={styles.row}>
                     <View style={styles.leftCol}>
                         <Text style={styles.monthAbbr}>{moment(from).format('MMM')}</Text>

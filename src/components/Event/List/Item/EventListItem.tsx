@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {IEvent} from "../../../../shared/models";
-import {Image} from "react-native";
-import {Body, Button, Card, CardItem, Icon, Left, Right, Spinner, Text, Thumbnail} from "native-base";
+import { CachedImage } from 'react-native-cached-image';
+import {Body, Button, Card, CardItem, Icon, Left, Right, Spinner, Text} from "native-base";
 import moment from 'moment';
 import {PlatformIcon} from "../../../../shared/utils";
+import CachedThumbnail from "../../../UI/CachedThumbnail/CachedThumbnail";
 
 type Props = {
     event: IEvent | null;
@@ -18,7 +19,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
             <Card>
                 <CardItem>
                     <Left style={{ flex: 1, marginRight: 20 }}>
-                        <Thumbnail source={profilePicture} />
+                        <CachedThumbnail source={profilePicture} />
                     </Left>
                     <Body style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-start' }}>
                     <Text>{title}</Text>
@@ -30,7 +31,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                     </Right>
                 </CardItem>
                 <CardItem cardBody>
-                    <Image source={event.image!} style={{ flex: 1, height: 300 }} />
+                    <CachedImage source={event.image!} style={{ flex: 1, height: 300 }} />
                 </CardItem>
                 <CardItem>
                     <Left style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>

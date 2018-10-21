@@ -3,7 +3,7 @@ import {Button, Col, Icon, Row, Text} from "native-base";
 import Layout from "../../../hoc/Layout/Layout";
 import {IForm, NavProp, IPerson} from "../../../shared/models";
 import {PlatformIcon} from "../../../shared/utils";
-import {Image} from "react-native";
+import { CachedImage } from 'react-native-cached-image';
 import ProfileUpdateForm from "./Form/ProfileUpdateForm";
 import {ProfileUpdateDispatchers} from "./ProfileUpdateContainer";
 
@@ -103,7 +103,7 @@ class ProfileUpdate extends React.Component<Props, State> {
                 {
                     profile && <Row>
                         <Col>
-                            <Image source={profile.profilePicture} style={{ height: 150, width: '100%' }} />
+                            <CachedImage source={profile.profilePicture} style={{ height: 150, width: '100%' }} />
                         </Col>
                         <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Button iconLeft info bordered

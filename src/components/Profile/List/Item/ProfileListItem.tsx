@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {NavProp, IPerson as IPerson} from "../../../../shared/models";
-import {Body, Icon, Left, ListItem, Right, Text, Thumbnail} from "native-base";
+import {Body, Icon, Left, ListItem, Right, Text} from "native-base";
 import {PlatformIcon} from "../../../../shared/utils";
 import {Routes} from "../../../../shared/constants";
+import CachedThumbnail from "../../../UI/CachedThumbnail/CachedThumbnail";
 
 type Props = NavProp & {
     person: IPerson;
@@ -16,7 +17,7 @@ const ProfileListItem = ({ person, navigation, onSelect }: Props) => {
             navigation.navigate(Routes.CHAT_WINDOW);
         }}>
             <Left>
-                <Thumbnail source={profilePicture} />
+                <CachedThumbnail source={profilePicture} style={{ marginLeft: 5 }} />
             </Left>
             <Body>
                 <Text>{givenName} {familyName}</Text>

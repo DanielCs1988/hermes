@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Image, ImageStyle, StyleProp} from "react-native";
+import {ImageStyle, StyleProp} from "react-native";
+import { CachedImage } from 'react-native-cached-image';
 import {Container, Content, Icon, Left, List, ListItem, Text} from "native-base";
 import styles from './SideDrawer.styles';
 import DrawerBg from '../../../assets/images/drawer-bg.jpg';
@@ -46,8 +47,8 @@ class SideDrawer extends React.Component<Props, {}> {
         return (
             <Container>
                 <Content>
-                    <Image source={DrawerBg} style={styles.drawerBg as StyleProp<ImageStyle>} />
-                    <Image source={DrawerLogo} style={styles.drawerLogo  as StyleProp<ImageStyle>} />
+                    <CachedImage source={DrawerBg} style={styles.drawerBg as StyleProp<ImageStyle>} />
+                    <CachedImage source={DrawerLogo} style={styles.drawerLogo  as StyleProp<ImageStyle>} />
                     <List
                         contentContainerStyle={styles.drawerContent}
                         dataArray={MenuPoints}

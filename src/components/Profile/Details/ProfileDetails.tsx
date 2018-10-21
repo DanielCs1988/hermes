@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Button, Card, Col, Grid, H1, H3, Icon, Row, Spinner, Text} from "native-base";
 import Layout from "../../../hoc/Layout/Layout";
 import {IPerson, NavProp} from "../../../shared/models";
-import {Image} from "react-native";
+import { CachedImage } from 'react-native-cached-image';
 import PersonDetailsInfoItem from "./InfoItem/PersonDetailsInfoItem";
 import {PlatformIcon} from "../../../shared/utils";
 import {Routes} from "../../../shared/constants";
@@ -19,7 +19,7 @@ const ProfileDetails = ({ navigation, person }: Props) => {
                 <Grid>
                     <Row>
                         <Col>
-                            <Image source={person.profilePicture} style={{ height: 150, width: '100%' }} />
+                            <CachedImage source={person.profilePicture} style={{ height: 150, width: '100%' }} />
                         </Col>
                         <Col style={{ alignItems: 'center' }}>
                             <H3>{`${person.givenName} ${person.familyName}`}</H3>
