@@ -5,10 +5,14 @@ import {IEvent} from "../../../shared/models";
 import {Dispatch} from "redux";
 import {AppState} from "../../../store/types";
 
-const mapStateToProps = ({ events: { selectedEvent } }: AppState) => ({ event: selectedEvent });
+const mapStateToProps = ({ events: { selectedEvent }, people: { currentUser } }: AppState) => ({
+    event: selectedEvent,
+    currentUser
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<EventActions>) => ({
-    deleteEvent: (event: IEvent) => dispatch(Actions.initDeleteEvent(event))
+    deleteEvent: (event: IEvent) => dispatch(Actions.initDeleteEvent(event)),
+    toggleParticipation: (eventId: string) => dispatch(Actions.initToggleEventParticipation(eventId))
 });
 export type EventDetailsDispatcher = ReturnType<typeof mapDispatchToProps>;
 

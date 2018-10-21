@@ -1,4 +1,4 @@
-import {put, select, takeLatest} from "redux-saga/effects";
+import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/events";
 import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
@@ -53,6 +53,7 @@ function* eventSagas() {
     yield takeLatest(ActionTypes.INIT_CREATE_EVENT, createEvent);
     yield takeLatest(ActionTypes.INIT_UPDATE_EVENT, updateEvent);
     yield takeLatest(ActionTypes.INIT_DELETE_EVENT, deleteEvent);
+    yield takeEvery(ActionTypes.INIT_TOGGLE_EVENT_PARTICIPATION, toggleParticipation);
 }
 
 export function* fetchEvents() {
@@ -119,6 +120,16 @@ export function* deleteEvent(action) {
     } catch (e) {
         yield put(Actions.deleteEventFailed(event));
         yield put(GlobalActions.showError(e.message));
+    }
+}
+
+export function* toggleParticipation(action) {
+    const eventId = action.payload;
+    const currentUser = yield select(getCurrentUser);
+    try {
+        yield put(Actions.toggleEventParticipation(eventId, currentUser));
+    } catch (e) {
+        yield put(Actions.toggleEventParticipation(eventId, currentUser));
     }
 }
 

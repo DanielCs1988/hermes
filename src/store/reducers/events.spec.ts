@@ -1,7 +1,7 @@
 import reducer, {getSelectedEvent, initialState} from "./events";
 import { Actions, EventActions } from "../actions/events";
 import { EventState } from "../types";
-import {event1, event2, events} from "./seed";
+import {event1, event2, events, people} from "./seed";
 
 describe('Events Reducer', () => {
 
@@ -168,6 +168,28 @@ describe('Events Reducer', () => {
             expect(getSelectedEvent({
                 events: { ...defaultState, selectedEvent: event2 }
             })).toEqual(event2);
+        });
+    });
+
+    describe('when toggling event participation', () => {
+        const participant = people['p01'];
+        const newPerson = people['p02'];
+        const action = Actions.toggleEventParticipation(event1.id, newPerson);
+
+        it('should add the current user to the event if they are not participating', () => {
+            expect(reducer({
+                ...defaultState, events: [{ ...event1, participants: [participant] }]
+            }, action)).toEqual({
+                ...defaultState, events: [{ ...event1, participants: [participant, newPerson] }]
+            });
+        });
+
+        it('should remove the current user from the event if they are participating', () => {
+            expect(reducer({
+                ...defaultState, events: [{ ...event1, participants: [participant, newPerson] }]
+            }, action)).toEqual({
+                ...defaultState, events: [{ ...event1, participants: [participant] }]
+            })
         });
     });
 });

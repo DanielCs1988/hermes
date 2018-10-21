@@ -11,9 +11,11 @@ import {EventDetailsDispatcher} from "./EventDetailsContainer";
 
 type Props = NavProp & EventDetailsDispatcher & {
     event: IEvent;
+    currentUser: string;
 }
-const EventDetails = ({ navigation, deleteEvent, event }: Props) => {
-    const { image, title, location, from, to, description, organizer } = event;
+const EventDetails = ({ navigation, deleteEvent, toggleParticipation, event, currentUser }: Props) => {
+    const { id, image, title, location, from, to, description, organizer, participants } = event;
+    const participating = !!participants.find(user => user.id === currentUser);
     return (
         <Layout navigation={navigation} title="Event Details" back>
             <Image source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
@@ -28,9 +30,9 @@ const EventDetails = ({ navigation, deleteEvent, event }: Props) => {
                 </View>
             </View>
             <View style={[styles.row, styles.buttonGroup]}>
-                <Button rounded bordered success
-                        onPress={() => alert('Joined!')}>
-                    <NBText>Join</NBText>
+                <Button rounded bordered success={!participating} danger={participating}
+                        onPress={() => toggleParticipation(id)}>
+                    <NBText>{ participating ? 'Not going' : 'Join' }</NBText>
                 </Button>
                 <Button rounded bordered
                         onPress={() => navigation.navigate(Routes.EDIT_EVENT)}>

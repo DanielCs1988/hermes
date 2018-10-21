@@ -1,5 +1,5 @@
 import { ActionsUnion, createAction } from "../action-creator";
-import {IEvent} from "../../shared/models";
+import {IEvent, IPerson} from "../../shared/models";
 
 export enum ActionTypes {
     INIT_FETCH_EVENTS = 'INIT_FETCH_EVENTS',
@@ -22,7 +22,10 @@ export enum ActionTypes {
 
     INIT_DELETE_EVENT = 'INIT_DELETE_EVENT',
     DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS',
-    DELETE_EVENT_FAILED = 'DELETE_EVENT_FAILED'
+    DELETE_EVENT_FAILED = 'DELETE_EVENT_FAILED',
+
+    INIT_TOGGLE_EVENT_PARTICIPATION = 'INIT_TOGGLE_EVENT_PARTICIPATION',
+    TOGGLE_EVENT_PARTICIPATION = 'TOGGLE_EVENT_PARTICIPATION'
 }
 
 export const Actions = {
@@ -48,7 +51,15 @@ export const Actions = {
 
     initDeleteEvent: (event: IEvent) => createAction(ActionTypes.INIT_DELETE_EVENT, event),
     deleteEventSuccess: (id: string) => createAction(ActionTypes.DELETE_EVENT_SUCCESS, id),
-    deleteEventFailed: (rollback: IEvent) => createAction(ActionTypes.DELETE_EVENT_FAILED, rollback)
+    deleteEventFailed: (rollback: IEvent) => createAction(ActionTypes.DELETE_EVENT_FAILED, rollback),
+
+    initToggleEventParticipation: (eventId: string) => createAction(
+        ActionTypes.INIT_TOGGLE_EVENT_PARTICIPATION, eventId
+    ),
+    toggleEventParticipation: (eventId: string, currentUser: IPerson) => createAction(
+        ActionTypes.TOGGLE_EVENT_PARTICIPATION, { eventId, currentUser }
+    ),
+
 };
 
 export type EventActions = ActionsUnion<typeof Actions>;

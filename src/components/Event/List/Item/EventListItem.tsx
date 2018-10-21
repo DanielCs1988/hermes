@@ -8,8 +8,10 @@ import {PlatformIcon} from "../../../../shared/utils";
 type Props = {
     event: IEvent | null;
     onSelect: () => void;
+    onChangeParticipation: () => void;
+    participating: boolean;
 }
-const EventListItem = ({ event, onSelect }: Props) => {
+const EventListItem = ({ event, onSelect, onChangeParticipation, participating }: Props) => {
     if (event) {
         const { title, from, location, participants, organizer: { profilePicture } } = event;
         return (
@@ -41,10 +43,13 @@ const EventListItem = ({ event, onSelect }: Props) => {
                     <Text>{`${participants.length} people will be there`}</Text>
                     </Body>
                     <Right style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-                        <Button success rounded bordered onPress={() => alert('You are going, yay!')}>
-                            <Icon name={PlatformIcon('checkmark')}/>
+                        <Button success rounded bordered onPress={onChangeParticipation}>
+                            <Icon name={ participating ?
+                                PlatformIcon('close') :
+                                PlatformIcon('checkmark') }
+                            />
                         </Button>
-                        <Text note>Join</Text>
+                        <Text note>{ participating ? 'Not going' : 'Join' }</Text>
                     </Right>
                 </CardItem>
             </Card>

@@ -13,6 +13,7 @@ import {Routes} from "../../../shared/constants";
 
 type Props = NavProp & FetchedData & EventListDispatchers & {
     events: IEvent[];
+    currentUser: string;
 };
 
 class EventList extends React.Component<Props> {
@@ -21,7 +22,7 @@ class EventList extends React.Component<Props> {
     }
 
     render() {
-        const { navigation, events, loading, initForm, selectEvent } = this.props;
+        const { navigation, events, loading, initForm, selectEvent, toggleParticipation, currentUser } = this.props;
         return (
             <WithGlobalState>
                 <Container>
@@ -39,6 +40,10 @@ class EventList extends React.Component<Props> {
                                                 selectEvent(event);
                                                 navigation.navigate(Routes.EVENT_DETAILS);
                                             }}
+                                            onChangeParticipation={() => toggleParticipation(event.id)}
+                                            participating={event.participants.find(
+                                                user => user.id === currentUser
+                                            )}
                                         />
                                     )}
                                 />

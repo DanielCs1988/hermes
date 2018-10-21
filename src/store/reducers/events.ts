@@ -1,5 +1,6 @@
 import {ActionTypes, EventActions} from "../actions/events";
 import {AppState, EventState} from "../types";
+import {IPerson} from "../../shared/models";
 
 export const initialState: EventState = {
     events: [],
@@ -93,6 +94,22 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
                 ...state,
                 events: [...state.events, action.payload]
             };
+        case ActionTypes.TOGGLE_EVENT_PARTICIPATION:
+            return {
+                ...state,
+                events: state.events.map(event => {
+                    if (event.id === action.payload.eventId) {
+                        return {
+                            ...event,
+                            participants: toggleUserParticipation(
+                                event.participants,
+                                action.payload.currentUser
+                            )
+                        };
+                    }
+                    return event;
+                })
+            };
         default:
             return state;
     }
@@ -100,6 +117,12 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
 
 export const getSelectedEvent = ({ events: { selectedEvent } }: AppState) => {
     return selectedEvent;
+};
+
+const toggleUserParticipation = (participants: IPerson[], currentUser: IPerson): IPerson[] => {
+    return participants.find(user => user.id === currentUser.id) ?
+        participants.filter(user => user.id !== currentUser.id) :
+        [...participants, currentUser];
 };
 
 export default eventReducer;
