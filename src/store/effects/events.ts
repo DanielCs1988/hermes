@@ -4,6 +4,7 @@ import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
 import {getCurrentUser, getPerson} from "../reducers/people";
 import {getEvent} from "../reducers/events";
+import {normalize} from "../../shared/utils";
 
 export const events: IEvent[] = [
     {
@@ -67,11 +68,7 @@ export function* fetchEvents() {
             // @ts-ignore
             participants: event.participants.map(participant => people[participant])
         }));
-        yield put(Actions.fetchEventsSuccess(
-            data
-                .map(event => ({ [event.id]: event }))
-                .reduce((acc, ev) => ({ ...acc, ...ev }), {})
-        ));
+        yield put(Actions.fetchEventsSuccess(normalize(data)));
     } catch (e) {
         yield put(Actions.fetchEventsFailed());
         yield put(GlobalActions.showError('Could not fetch events!'));

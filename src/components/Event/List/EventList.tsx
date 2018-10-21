@@ -37,7 +37,7 @@ class EventList extends React.Component<Props> {
                                         <EventListItem
                                             event={event}
                                             onSelect={() => {
-                                                selectEvent(event);
+                                                selectEvent(event.id);
                                                 navigation.navigate(Routes.EVENT_DETAILS);
                                             }}
                                             onChangeParticipation={() => toggleParticipation(event.id)}

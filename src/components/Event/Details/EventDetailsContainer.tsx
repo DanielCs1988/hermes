@@ -5,8 +5,8 @@ import {IEvent} from "../../../shared/models";
 import {Dispatch} from "redux";
 import {AppState} from "../../../store/types";
 
-const mapStateToProps = ({ events: { selectedEvent }, people: { currentUser } }: AppState) => ({
-    event: selectedEvent,
+const mapStateToProps = ({ events: { events, selectedEvent }, people: { currentUser } }: AppState) => ({
+    event: events[selectedEvent],
     currentUser
 });
 

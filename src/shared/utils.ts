@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import { Toast } from "native-base";
+import {Entity} from "./models";
 
 export const PlatformIcon = (name: string) => {
     return Platform.OS === 'android' ? `md-${name}` : `ios-${name}`;
@@ -27,6 +28,12 @@ export const runIf = (condition: any, func: Function, ...args: any[]) => {
     if (condition) {
         return func(...args);
     }
+};
+
+export const normalize = <T extends Entity>(collection: T[]): {[id: string]: T} => {
+    return collection
+        .map(entity => ({ [entity.id]: entity }))
+        .reduce((acc, next) => ({ ...acc, ...next }), {});
 };
 
 export const removeProperty = (prevObject, keyToRemove) => {
