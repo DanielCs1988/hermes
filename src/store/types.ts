@@ -13,7 +13,7 @@ export interface FetchedData extends Loadable {
 }
 
 export interface GlobalState {
-    error: string | null;
+    error: string;
 }
 
 export interface IPeople {
@@ -21,8 +21,8 @@ export interface IPeople {
 }
 export interface PeopleState extends FetchedData {
     people: IPeople;
-    selectedProfile: IPerson | null;
-    currentUser: string | null;
+    selectedProfile: IPerson;
+    currentUser: string;
 }
 
 export interface ChatHistory {
@@ -34,14 +34,17 @@ export interface ConversationState extends FetchedData {
     currentTarget: IPerson;
 }
 
+export interface IEventList {
+    [id: string]: IEvent;
+}
 export interface EventState extends FetchedData {
-    events: IEvent[];
-    selectedEvent: IEvent | null;
+    events: IEventList;
+    selectedEvent: string | null;
 }
 
 export interface AuthState extends Loadable {
-    token: string | null;
-    expiresIn: number | null;
+    token: string;
+    expiresIn: number;
 }
 
 export interface AppState {

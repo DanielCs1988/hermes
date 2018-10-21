@@ -1,9 +1,10 @@
 import {ActionTypes, EventActions} from "../actions/events";
 import {AppState, EventState} from "../types";
 import {IPerson} from "../../shared/models";
+import {removeProperty} from "../../shared/utils";
 
 export const initialState: EventState = {
-    events: [],
+    events: {},
     loading: false,
     fetched: false,
     selectedEvent: null
@@ -38,85 +39,52 @@ const eventReducer = (state = initialState, action: EventActions): EventState =>
                 ...state,
                 selectedEvent: null
             };
-        case ActionTypes.CREATE_EVENT_OPTRES:
+        case ActionTypes.CREATE_EVENT:
+        case ActionTypes.UPDATE_EVENT:
             return {
                 ...state,
-                events: [...state.events, action.payload],
-                selectedEvent: action.payload
+                events: {
+                    ...state.events,
+                    [action.payload.id]: action.payload
+                },
+                selectedEvent: action.payload.id
             };
-        case ActionTypes.CREATE_EVENT_SUCCESS:
-            const optResId = action.payload.optResId;
+        case ActionTypes.REPLACE_EVENT:
+            const newEvent = action.payload.event;
+            const newEvents = removeProperty(state.events, action.payload.optResId);
+            newEvents[newEvent.id] = newEvent;
             return {
                 ...state,
-                events: state.events.map(event => {
-                    if (event.id === optResId) {
-                        return action.payload.event;
-                    }
-                    return event;
-                }),
-                selectedEvent: action.payload.event
+                events: newEvents,
+                selectedEvent: newEvent.id
             };
-        case ActionTypes.CREATE_EVENT_FAILED:
-            // TODO: add UNIQUE dummy ID to newly created event!
+        case ActionTypes.DELETE_EVENT:
             return {
                 ...state,
-                events: state.events.filter(event => event.id !== action.payload)
-            };
-        case ActionTypes.UPDATE_EVENT_SUCCESS:
-            return {
-                ...state,
-                events: state.events.map(event => {
-                    if (event.id === action.payload.id) {
-                        return action.payload;
-                    }
-                    return event;
-                }),
-                selectedEvent: action.payload
-            };
-        case ActionTypes.UPDATE_EVENT_FAILED:
-            return {
-                ...state,
-                events: state.events.map(event => {
-                    if (event.id === action.payload.id) {
-                        return action.payload;
-                    }
-                    return event;
-                }),
-                selectedEvent: action.payload
-            };
-        case ActionTypes.DELETE_EVENT_SUCCESS:
-            return {
-                ...state,
-                events: state.events.filter(event => event.id !== action.payload)
-            };
-        case ActionTypes.DELETE_EVENT_FAILED:
-            return {
-                ...state,
-                events: [...state.events, action.payload]
+                events: removeProperty(state.events, action.payload)
             };
         case ActionTypes.TOGGLE_EVENT_PARTICIPATION:
+            const eventId = action.payload.eventId;
             return {
                 ...state,
-                events: state.events.map(event => {
-                    if (event.id === action.payload.eventId) {
-                        return {
-                            ...event,
-                            participants: toggleUserParticipation(
-                                event.participants,
-                                action.payload.currentUser
-                            )
-                        };
+                events: {
+                    ...state.events,
+                    [eventId]: {
+                        ...state.events[eventId],
+                        participants: toggleUserParticipation(
+                            state.events[eventId].participants,
+                            action.payload.currentUser
+                        )
                     }
-                    return event;
-                })
+                }
             };
         default:
             return state;
     }
 };
 
-export const getSelectedEvent = ({ events: { selectedEvent } }: AppState) => {
-    return selectedEvent;
+export const getEvent = (id: string) => ({ events: { events } }: AppState) => {
+    return events[id];
 };
 
 const toggleUserParticipation = (participants: IPerson[], currentUser: IPerson): IPerson[] => {

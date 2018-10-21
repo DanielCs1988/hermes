@@ -2,8 +2,8 @@ import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/events";
 import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
-import { getSelectedEvent } from "../reducers/events";
 import {getCurrentUser, getPerson} from "../reducers/people";
+import {getEvent} from "../reducers/events";
 
 export const events: IEvent[] = [
     {
@@ -48,8 +48,6 @@ export const events: IEvent[] = [
 
 function* eventSagas() {
     yield takeLatest(ActionTypes.INIT_FETCH_EVENTS, fetchEvents);
-    yield takeLatest(ActionTypes.INIT_SELECT_EVENT, selectEvent);
-    yield takeLatest(ActionTypes.INIT_CREATE_EVENT_FORM, initCreateEventForm);
     yield takeLatest(ActionTypes.INIT_CREATE_EVENT, createEvent);
     yield takeLatest(ActionTypes.INIT_UPDATE_EVENT, updateEvent);
     yield takeLatest(ActionTypes.INIT_DELETE_EVENT, deleteEvent);
@@ -62,64 +60,58 @@ export function* fetchEvents() {
             'asd': yield select(getPerson('asd')),
             'qrt': yield select(getPerson('qrt'))
         };
+        const data = events.map(event => ({
+            ...event,
+            // @ts-ignore
+            organizer: people[event.organizer],
+            // @ts-ignore
+            participants: event.participants.map(participant => people[participant])
+        }));
         yield put(Actions.fetchEventsSuccess(
-            events.map(event => ({
-                ...event,
-                // @ts-ignore
-                organizer: people[event.organizer],
-                // @ts-ignore
-                participants: event.participants.map(participant => people[participant])
-            }))
+            data
+                .map(event => ({ [event.id]: event }))
+                .reduce((acc, ev) => ({ ...acc, ...ev }), {})
         ));
     } catch (e) {
         yield put(Actions.fetchEventsFailed());
-        yield put(GlobalActions.showError(e.message));
+        yield put(GlobalActions.showError('Could not fetch events!'));
     }
-}
-
-export function* selectEvent(action) {
-    const event = action.payload;
-    yield put(Actions.selectEvent(event));
-}
-
-export function* initCreateEventForm() {
-    yield put(Actions.clearSelection());
 }
 
 export function* createEvent(action) {
     const organizer = yield select(getCurrentUser);
     const event = {
         ...action.payload,
-        id: '',  // TODO: generator to generate id
+        id: 'temp',  // TODO: generator to generate id
         participants: [],
         organizer
     };
     try {
-        yield put(Actions.createEventOptRes(event));
+        yield put(Actions.createEvent(event));
     } catch (e) {
-        yield put(Actions.createEventFailed(''));
-        yield put(GlobalActions.showError(e.message));
+        yield put(Actions.deleteEvent(event.id));
+        yield put(GlobalActions.showError('Could not create event!'));
     }
 }
 
 export function* updateEvent(action) {
     const updatedEvent = action.payload;
-    const oldEvent = yield select(getSelectedEvent);
+    const oldEvent = yield select(getEvent(updatedEvent.id));
     try {
-        yield put(Actions.updateEventSuccess(updatedEvent));
+        yield put(Actions.updateEvent(updatedEvent));
     } catch (e) {
-        yield put(Actions.updateEventFailed(oldEvent));
-        yield put(GlobalActions.showError(e.message));
+        yield put(Actions.updateEvent(oldEvent));
+        yield put(GlobalActions.showError('Could not updated event!'));
     }
 }
 
 export function* deleteEvent(action) {
     const event = action.payload;
     try {
-        yield put(Actions.deleteEventSuccess(event.id));
+        yield put(Actions.deleteEvent(event.id));
     } catch (e) {
-        yield put(Actions.deleteEventFailed(event));
-        yield put(GlobalActions.showError(e.message));
+        yield put(Actions.createEvent(event));
+        yield put(GlobalActions.showError('Could not delete event!'));
     }
 }
 

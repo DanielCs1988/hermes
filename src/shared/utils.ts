@@ -28,3 +28,13 @@ export const runIf = (condition: any, func: Function, ...args: any[]) => {
         return func(...args);
     }
 };
+
+export const removeProperty = (prevObject, keyToRemove) => {
+    return Object.keys(prevObject)
+        .reduce((obj, key) => {
+            if (key !== keyToRemove) {
+                obj[key] = prevObject[key];
+            }
+            return obj;
+        }, {});
+};

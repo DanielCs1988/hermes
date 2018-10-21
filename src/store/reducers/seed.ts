@@ -1,5 +1,5 @@
-import {IConversation, IEvent, IMessage} from "../../shared/models";
-import {ChatHistory, IPeople} from "../types";
+import {IConversation, IMessage} from "../../shared/models";
+import {ChatHistory, IEventList, IPeople} from "../types";
 
 export const people: IPeople = {
     'p01': {
@@ -55,7 +55,10 @@ export const event2 = {
     organizer: people['p02'],
     participants: [people['p02'], people['p01']]
 };
-export const events: IEvent[] = [event1, event2];
+export const events: IEventList = {
+    [event1.id]: event1,
+    [event2.id]: event2
+};
 
 export const conversations: IConversation[] = [
     {

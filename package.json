@@ -47,16 +47,14 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
       "\\.(ts|tsx)$": "ts-jest"
     },
+    "transformIgnorePatterns": [
+      "node_modules/(?!native-base-shoutem-theme|react-native-easy-grid|react-native|react-navigation|expo)"
+    ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
       "<rootDir>/node_modules/"
     ],
-    "cacheDirectory": ".jest/cache",
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "C:\\Code\\Native\\Hermes\\tsconfig.test.json"
-      }
-    }
+    "cacheDirectory": ".jest/cache"
   }
 }
