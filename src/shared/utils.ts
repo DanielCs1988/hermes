@@ -45,3 +45,10 @@ export const removeProperty = (prevObject, keyToRemove) => {
             return obj;
         }, {});
 };
+
+export const IdGenerator = {
+    _current: 0,
+    generate() {
+        return '' + this._current++;
+    }
+};

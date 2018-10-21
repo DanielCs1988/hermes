@@ -4,7 +4,7 @@ import {Actions as GlobalActions} from "../actions/global";
 import {IEvent} from "../../shared/models";
 import {getCurrentUser, getPerson} from "../reducers/people";
 import {getEvent} from "../reducers/events";
-import {normalize} from "../../shared/utils";
+import {IdGenerator, normalize} from "../../shared/utils";
 
 export const events: IEvent[] = [
     {
@@ -79,7 +79,8 @@ export function* createEvent(action) {
     const organizer = yield select(getCurrentUser);
     const event = {
         ...action.payload,
-        id: 'temp',  // TODO: generator to generate id
+        id: IdGenerator.generate(),
+        createdAt: new Date().getTime(),
         participants: [],
         organizer
     };

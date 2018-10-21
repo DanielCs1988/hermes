@@ -4,6 +4,7 @@ import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/conversations";
 import {Actions as GlobalActions} from "../actions/global";
 import {ChatHistory} from "../types";
+import {IdGenerator} from "../../shared/utils";
 
 const conversations: IConversation[] = [
     {
@@ -103,9 +104,9 @@ export function* createMessage(action) {
     const currentUser = yield select(getCurrentUser);
     const message: IMessage = {
         ...action.payload,
-        id: '',  // TODO: use random ID generator
-        from: currentUser.id,
-        createdAt: new Date().getTime()
+        id: IdGenerator.generate(),
+        createdAt: new Date().getTime(),
+        from: currentUser.id
     };
     try {
         yield put(Actions.createMessageOptRes(message));
