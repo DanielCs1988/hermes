@@ -42,9 +42,9 @@ export interface EventState extends FetchedData {
     selectedEvent: string | null;
 }
 
-export interface AuthState extends Loadable {
+export interface AuthState {
     token: string;
-    expiresIn: number;
+    expiresAt: number;
 }
 
 export interface AppState {

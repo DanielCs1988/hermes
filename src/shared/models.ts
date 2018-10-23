@@ -49,7 +49,7 @@ export interface Location {
 export interface IEvent extends Entity {
     title: string;
     description?: string;
-    image?: ImageURISource;
+    image: ImageURISource;
     location: Location;
     organizer: IPerson;
     createdAt: number;
@@ -64,8 +64,7 @@ export interface Credentials {
 }
 export interface AuthPayload {
     token: string;
-    expiresIn?: number;
-    refreshToken?: string;
+    expiresAt: number;
 }
 
 export type NavProp = {

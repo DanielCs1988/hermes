@@ -6,6 +6,7 @@ import TabBar from "../components/UI/TabBar/TabBar";
 import EventNavigator from "../components/Event";
 import PeopleNavigator from "../components/Profile";
 import ChatNavigator from "../components/Conversations";
+import AuthContainer from "../components/Authentication/AuthContainer";
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -24,9 +25,11 @@ const TabNavigator = createBottomTabNavigator(
 
 const Drawer  = createDrawerNavigator(
     {
+        [Routes.AUTH_SCREEN]: AuthContainer,
         [Routes.MAIN_APPLICATION]: TabNavigator
     },
     {
+        initialRouteName: Routes.AUTH_SCREEN,
         contentComponent: props => <SideDrawer {...props} />
     }
 );

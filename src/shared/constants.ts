@@ -1,4 +1,5 @@
 export enum Routes {
+    AUTH_SCREEN = 'AuthScreen',
     MAIN_APPLICATION = 'MainApplication',
     EVENT_STACK = 'EventStack',
     EVENTS = 'Events',
@@ -17,7 +18,5 @@ export enum Routes {
 
 export enum StorageKeys {
     TOKEN = 'nm:auth:token',
-    USER_ID = 'nm:auth:userId',
-    EXPIRES_IN = 'nm:auth:expiresIn',
-    REFRESH_TOKEN = 'nm:auth:refreshToken'
+    EXPIRES_AT = 'nm:auth:expiresAt'
 }

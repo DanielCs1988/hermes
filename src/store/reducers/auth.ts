@@ -1,14 +1,18 @@
-import {AuthActions} from "../actions/auth";
+import {ActionTypes, AuthActions} from "../actions/auth";
 import {AuthState} from "../types";
 
 export const initialState: AuthState = {
     token: null,
-    expiresIn: null,
-    loading: false
+    expiresAt: null
 };
 
 const authReducer = (state = initialState, action: AuthActions): AuthState => {
     switch (action.type) {
+        case ActionTypes.AUTH_SUCCESS:
+            return {
+                ...state,
+                ...action.payload
+            };
         default:
             return state;
     }

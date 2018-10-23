@@ -31,6 +31,7 @@ function* peopleSagas() {
 }
 
 export function* fetchProfiles() {
+    //TODO: !! map image source from string to ImageProp
     try {
         yield put(Actions.fetchPeopleSuccess(people));
     } catch (e) {
