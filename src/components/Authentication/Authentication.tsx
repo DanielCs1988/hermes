@@ -20,8 +20,7 @@ class Authentication extends React.Component<Props> {
     };
 
     componentDidUpdate() {
-        console.log('AUTH_SCREEN: ComponentDidUpdate');
-        if (this.props.token) {
+        if (this.props.authenticated) {
             this.props.navigation.navigate(Routes.MAIN_APPLICATION);
         }
     }

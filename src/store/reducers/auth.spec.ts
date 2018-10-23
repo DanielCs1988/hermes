@@ -17,7 +17,7 @@ describe('Auth Reducer', () => {
     });
 
     describe('when authenticating', () => {
-        const action = Actions.authenticate({
+        const action = Actions.saveCredentials({
             token: 'tokken',
             expiresAt: 123
         });

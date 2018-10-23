@@ -6,14 +6,11 @@ import {Dispatch} from "redux";
 import {IPerson} from "../../../shared/models";
 import {ConversationActions, Actions as ConvActions} from "../../../store/actions/conversations";
 
-const mapStateToProps = ({ people: { people, fetched, loading } }: AppState) => ({
-    people: Object.values(people),
-    fetched, loading
+const mapStateToProps = ({ people: { people } }: AppState) => ({
+    people: Object.values(people)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<PeopleActions | ConversationActions>) => ({
-    fetchPeople: () => dispatch(Actions.initFetchPeople()),
-    getCurrentUser: () => dispatch(Actions.initGetCurrentUserId()),
     selectProfile: (profile: IPerson) => dispatch(Actions.selectProfile(profile)),
     selectTarget: (target: IPerson) => dispatch(ConvActions.selectTarget(target))
 });

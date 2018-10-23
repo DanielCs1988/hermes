@@ -18,13 +18,6 @@ class ProfileList extends React.Component<Props> {
         rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    componentDidMount() {
-        if (!this.props.fetched) {
-            this.props.fetchPeople();
-            this.props.getCurrentUser();
-        }
-    }
-
     render() {
         const { navigation, people, loading, selectProfile, selectTarget } = this.props;
         return (

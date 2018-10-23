@@ -36,7 +36,8 @@ class ProfileUpdate extends React.Component<Props, State> {
                 .map(key => ({
                     [key]: {
                         ...formDefault,
-                        value: person[key]
+                        value: person[key],
+                        valid: true
                     }
                 }))
                 .reduce((a, b) => ({...a, ...b}), {})
@@ -54,12 +55,12 @@ class ProfileUpdate extends React.Component<Props, State> {
     };
 
     private birthdayChangeHandler = (newBirthday: Date) => {
-        this.setState(prevState => ({
+        this.setState({
             birthday: {
-                ...prevState.birthday,
-                value: newBirthday.getTime()
+                value: newBirthday.getTime(),
+                valid: true
             }
-        }));
+        });
     };
 
     private submitHandler = () => {

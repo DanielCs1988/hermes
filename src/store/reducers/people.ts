@@ -5,29 +5,15 @@ import {IPerson} from "../../shared/models";
 export const initialState: PeopleState = {
     people: {},
     currentUser: null,
-    selectedProfile: null,
-    loading: false,
-    fetched: false
+    selectedProfile: null
 };
 
 const peopleReducer = (state = initialState, action: PeopleActions): PeopleState => {
     switch (action.type) {
-        case ActionTypes.INIT_FETCH_PEOPLE:
-            return {
-                ...state,
-                loading: true
-            };
         case ActionTypes.FETCH_PEOPLE_SUCCESS:
             return {
                 ...state,
-                people: action.payload,
-                loading: false,
-                fetched: true
-            };
-        case ActionTypes.FETCH_PEOPLE_FAILED:
-            return {
-                ...state,
-                loading: false
+                people: action.payload
             };
         case ActionTypes.SELECT_PROFILE:
             return {

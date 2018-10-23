@@ -18,6 +18,7 @@ export interface Entity {
 }
 
 export interface IPerson extends Entity {
+    sub: string;
     givenName: string;
     familyName: string;
     profilePicture: ImageURISource;

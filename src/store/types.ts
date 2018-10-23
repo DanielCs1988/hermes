@@ -19,7 +19,7 @@ export interface GlobalState {
 export interface IPeople {
     [id: string]: IPerson
 }
-export interface PeopleState extends FetchedData {
+export interface PeopleState {
     people: IPeople;
     selectedProfile: IPerson;
     currentUser: string;
@@ -45,6 +45,7 @@ export interface EventState extends FetchedData {
 export interface AuthState {
     token: string;
     expiresAt: number;
+    authenticated: boolean;
 }
 
 export interface AppState {

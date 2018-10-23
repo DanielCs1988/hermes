@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import { Toast } from "native-base";
 import {Entity} from "./models";
+import {AxiosRequestConfig} from "axios";
 
 export const PlatformIcon = (name: string) => {
     return Platform.OS === 'android' ? `md-${name}` : `ios-${name}`;
@@ -52,3 +53,9 @@ export const IdGenerator = {
         return '' + this._current++;
     }
 };
+
+export const withAuth = (token: string): AxiosRequestConfig => ({
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
