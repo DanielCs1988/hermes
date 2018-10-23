@@ -55,6 +55,8 @@ export const getPerson = (id: string) => ({ people: { people } }: AppState): IPe
     return people[id];
 };
 
+export const getPeople = ({ people: { people } }: AppState) => people;
+
 export const getCurrentUser = ({ people: { people, currentUser } }: AppState): IPerson | null => {
     return currentUser ? people[currentUser] : null;
 };

@@ -15,7 +15,7 @@ class Layout extends React.Component<Props> {
     render() {
         const { navigation, title, back = false, padded = false, footer, children } = this.props;
         return (
-            <WithGlobalState navigation={navigation}>
+            <WithGlobalState>
                 <Container>
                     <NavBar navigation={navigation} title={title} back={back} />
                     <Content padder={padded}>{children}</Content>
