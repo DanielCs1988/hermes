@@ -8,10 +8,16 @@ export const initialState: AuthState = {
 
 const authReducer = (state = initialState, action: AuthActions): AuthState => {
     switch (action.type) {
-        case ActionTypes.AUTH_SUCCESS:
+        case ActionTypes.AUTHENTICATE:
             return {
                 ...state,
                 ...action.payload
+            };
+        case ActionTypes.LOGOUT:
+            return {
+                ...state,
+                token: null,
+                expiresAt: null
             };
         default:
             return state;

@@ -2,11 +2,15 @@ import { ActionsUnion, createAction } from "../action-creator";
 import {AuthPayload} from "../../shared/models";
 
 export enum ActionTypes {
-    AUTH_SUCCESS = 'AUTH_SUCCESS'
+    AUTHENTICATE = 'AUTH_SUCCESS',
+    INIT_LOGOUT = 'INIT_LOGOUT',
+    LOGOUT = 'LOGOUT'
 }
 
 export const Actions = {
-    authSuccess: (authData: AuthPayload) => createAction(ActionTypes.AUTH_SUCCESS, authData)
+    authenticate: (authData: AuthPayload) => createAction(ActionTypes.AUTHENTICATE, authData),
+    initLogout: () => createAction(ActionTypes.INIT_LOGOUT),
+    logout: () => createAction(ActionTypes.LOGOUT)
 };
 
 export type AuthActions = ActionsUnion<typeof Actions>;

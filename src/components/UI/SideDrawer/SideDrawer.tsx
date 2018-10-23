@@ -8,6 +8,7 @@ import DrawerLogo from '../../../assets/images/drawer-logo.png';
 import {Routes} from "../../../shared/constants";
 import {PlatformIcon} from "../../../shared/utils";
 import {NavProp} from "../../../shared/models";
+import {SideDrawerDispatchers} from "./SideDrawerContainer";
 
 const MenuPoints = [
     {
@@ -32,16 +33,15 @@ const MenuPoints = [
     }
 ];
 
-type Props = NavProp & {
-    token: string | null;
-    onLogout: () => void;
+type Props = NavProp & SideDrawerDispatchers & {
+    token: string;
 }
-class SideDrawer extends React.Component<Props, {}> {
-    // componentDidUpdate() {
-    //     if (!this.props.token) {
-    //         this.props.navigation.navigate(Routes.AUTHENTICATION);
-    //     }
-    // }
+class SideDrawer extends React.Component<Props> {
+    componentDidUpdate() {
+        if (!this.props.token) {
+            this.props.navigation.navigate(Routes.AUTH_SCREEN);
+        }
+    }
 
     render() {
         return (
@@ -57,7 +57,7 @@ class SideDrawer extends React.Component<Props, {}> {
                                 if (item.route) {
                                     this.props.navigation.navigate(item.route);
                                 } else {
-                                    this.props.onLogout();
+                                    this.props.logout();
                                 }
                             }}>
                                 <Left>
@@ -74,10 +74,3 @@ class SideDrawer extends React.Component<Props, {}> {
 }
 
 export default SideDrawer;
-
-// const mapStateToProps = ({ auth: { token } }: AppState) => ({ token });
-// const mapDispatchToProps = (dispatch: Function) => ({
-//     onLogout: () => dispatch(Actions.initLogout())
-// });
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(SideDrawer);

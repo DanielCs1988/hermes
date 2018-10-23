@@ -1,5 +1,6 @@
 export enum Routes {
     AUTH_SCREEN = 'AuthScreen',
+    DRAWER = 'Drawer',
     MAIN_APPLICATION = 'MainApplication',
     EVENT_STACK = 'EventStack',
     EVENTS = 'Events',

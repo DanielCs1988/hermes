@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { createBottomTabNavigator, createDrawerNavigator } from "react-navigation";
+import {createBottomTabNavigator, createDrawerNavigator, createSwitchNavigator} from "react-navigation";
 import {Routes} from "./constants";
-import SideDrawer from "../components/UI/SideDrawer/SideDrawer";
+import SideDrawer from "../components/UI/SideDrawer/SideDrawerContainer";
 import TabBar from "../components/UI/TabBar/TabBar";
 import EventNavigator from "../components/Event";
 import PeopleNavigator from "../components/Profile";
@@ -34,4 +34,14 @@ const Drawer  = createDrawerNavigator(
     }
 );
 
-export default Drawer;
+const MainNavigator = createSwitchNavigator(
+    {
+        [Routes.AUTH_SCREEN]: AuthContainer,
+        [Routes.DRAWER]: Drawer
+    },
+    {
+        initialRouteName: Routes.AUTH_SCREEN
+    }
+);
+
+export default MainNavigator;

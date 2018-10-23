@@ -10,7 +10,7 @@ const mapStateToProps = ({ auth: { token, expiresAt } }: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AuthActions>) => ({
-    login: (credentials: AuthPayload) => dispatch(Actions.authSuccess(credentials))
+    login: (credentials: AuthPayload) => dispatch(Actions.authenticate(credentials))
 });
 export type AuthDispatchers = ReturnType<typeof mapDispatchToProps>;
 
