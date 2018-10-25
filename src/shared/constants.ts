@@ -1,7 +1,7 @@
 export enum Endpoints {
     PROFILES = 'https://hermes-social-server.herokuapp.com/users',
     EVENTS = 'https://hermes-social-server.herokuapp.com/events',
-    CHAT = 'https://hermes-social-server.herokuapp.com/'
+    CHAT = 'https://hermes-social-server.herokuapp.com/chat'
 }
 
 export enum Routes {

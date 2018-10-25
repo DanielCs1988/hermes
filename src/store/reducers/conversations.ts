@@ -17,22 +17,18 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                 ...state,
                 loading: true
             };
+        case ActionTypes.FETCH_CONVERSATIONS_FAILED:
+        case ActionTypes.FETCH_MESSAGES_FAILED:
+            return {
+                ...state,
+                loading: false
+            };
         case ActionTypes.FETCH_CONVERSATIONS_SUCCESS:
             return {
                 ...state,
                 fetched: true,
                 loading: false,
                 conversations: action.payload
-            };
-        case ActionTypes.FETCH_CONVERSATIONS_FAILED:
-            return {
-                ...state,
-                loading: false
-            };
-        case ActionTypes.SELECT_TARGET:
-            return {
-                ...state,
-                currentTarget: action.payload
             };
         case ActionTypes.FETCH_MESSAGES_SUCCESS:
             return {
@@ -43,10 +39,10 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                     ...action.payload
                 }
             };
-        case ActionTypes.FETCH_MESSAGES_FAILED:
+        case ActionTypes.SELECT_TARGET:
             return {
                 ...state,
-                loading: false
+                currentTarget: action.payload
             };
         case ActionTypes.CREATE_MESSAGE_OPTRES:
             // TODO: messages arriving on the channel should have their swapped: from is the target

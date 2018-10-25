@@ -2,8 +2,8 @@ import * as React from 'react';
 import { CachedImage } from 'react-native-cached-image';
 import {StyleSheet} from "react-native";
 
-const CachedThumbnail = ({ style = {}, square = false, ...rest }) => (
-    <CachedImage style={[
+const CachedThumbnail = ({ style = {}, square = false, source, ...rest }) => (
+    <CachedImage source={{ uri: source }} style={[
         styles.basic,
         square && styles.square,
         style

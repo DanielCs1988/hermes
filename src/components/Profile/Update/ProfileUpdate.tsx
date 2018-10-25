@@ -104,7 +104,10 @@ class ProfileUpdate extends React.Component<Props, State> {
                 {
                     profile && <Row>
                         <Col>
-                            <CachedImage source={profile.profilePicture} style={{ height: 150, width: '100%' }} />
+                            <CachedImage
+                                source={{ uri: profile.profilePicture }}
+                                style={{ height: 150, width: '100%' }}
+                            />
                         </Col>
                         <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Button iconLeft info bordered

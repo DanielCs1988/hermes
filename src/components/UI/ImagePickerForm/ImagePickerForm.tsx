@@ -45,7 +45,10 @@ class ImagePickerForm extends React.Component<Props, State> {
             {
                 pickedImage ?
                     <>
-                        <CachedImage source={this.state.pickedImage!} style={{ height: '100%', width: '100%' }} />
+                        <CachedImage
+                            source={{ uri: pickedImage }}
+                            style={{ height: '100%', width: '100%' }}
+                        />
                         <Button info
                                 style={{ position: 'absolute', bottom: 0, right: 0, borderTopLeftRadius: 10 }}
                                 onPress={this.pickImageHandler}>

@@ -31,7 +31,10 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                     </Right>
                 </CardItem>
                 <CardItem cardBody>
-                    <CachedImage source={event.image!} style={{ flex: 1, height: 300 }} />
+                    <CachedImage
+                        source={{ uri: event.image }}
+                        style={{ flex: 1, height: 300 }}
+                    />
                 </CardItem>
                 <CardItem>
                     <Left style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>

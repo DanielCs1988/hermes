@@ -19,7 +19,9 @@ const ProfileDetails = ({ navigation, person }: Props) => {
                 <Grid>
                     <Row>
                         <Col>
-                            <CachedImage source={person.profilePicture} style={{ height: 150, width: '100%' }} />
+                            <CachedImage
+                                source={{ uri: person.profilePicture }}
+                                style={{ height: 150, width: '100%' }} />
                         </Col>
                         <Col style={{ alignItems: 'center' }}>
                             <H3>{`${person.givenName} ${person.familyName}`}</H3>

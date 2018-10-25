@@ -96,7 +96,6 @@ export function* toggleParticipation(action) {
 
 export const mapEvent = (event, people) => ({
     ...event,
-    image: { uri: event.image },
     organizer: people[event.organizer],
     participants: event.participants
         .map(participant => people[participant])

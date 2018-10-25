@@ -23,7 +23,7 @@ class ConversationList extends React.Component<Props> {
                 <Loader loading={loading}>
                     <FlatList
                         data={conversations}
-                        keyExtractor={conversation => conversation.target.id}
+                        keyExtractor={conversation => conversation.id}
                         renderItem={({ item }) => (
                             <ConversationListItem
                                 navigation={navigation}

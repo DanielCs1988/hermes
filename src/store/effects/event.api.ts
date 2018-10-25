@@ -10,14 +10,14 @@ export const fetchEvents = async (token: string) => {
 
 export const createEvent = async (event: IEvent, token: string) => {
     const { data: newEvent } = await axios.post(Endpoints.EVENTS, {
-        ...event, image: event.image.uri, organizer: null
+        ...event, organizer: null
     }, withAuth(token));
     return newEvent;
 };
 
 export const updateEvent = async (event: IEvent, token: string) => {
     const { data: updatedEvent } = await axios.put(`${Endpoints.EVENTS}/${event.id}`, {
-        ...event, image: event.image.uri, organizer: null, participants: []
+        ...event, organizer: null, participants: []
     }, withAuth(token));
     return updatedEvent;
 };

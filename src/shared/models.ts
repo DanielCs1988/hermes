@@ -1,5 +1,4 @@
 import { NavigationScreenProp } from "react-navigation";
-import {ImageURISource} from "react-native";
 
 export interface IFormField {
     value: string;
@@ -21,7 +20,7 @@ export interface IPerson extends Entity {
     sub: string;
     givenName: string;
     familyName: string;
-    profilePicture: ImageURISource;
+    profilePicture: string;
     registeredAt: number;
     email?: string;
     phone?: string;
@@ -31,12 +30,12 @@ export interface IPerson extends Entity {
 
 export interface IMessage extends Entity {
     content: string;
-    from?: string;
     to: string;
+    from?: string;
     createdAt?: number;
 }
 
-export interface IConversation {
+export interface IConversation extends Entity {
     target: IPerson;
     lastMessage: IMessage;
 }
@@ -50,7 +49,7 @@ export interface Location {
 export interface IEvent extends Entity {
     title: string;
     description?: string;
-    image: ImageURISource;
+    image: string;
     location: Location;
     organizer: IPerson;
     createdAt: number;

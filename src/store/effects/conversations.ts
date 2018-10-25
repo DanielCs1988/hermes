@@ -1,68 +1,11 @@
-import {IConversation, IMessage} from "../../shared/models";
-import {getCurrentUser, getPerson} from "../reducers/people";
-import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
+import {IMessage} from "../../shared/models";
+import {getCurrentUser, getPeople} from "../reducers/people";
+import {call, put, select, takeEvery, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/conversations";
 import {Actions as GlobalActions} from "../actions/global";
-import {ChatHistory} from "../types";
 import {IdGenerator} from "../../shared/utils";
-
-const conversations: IConversation[] = [
-    {
-        // @ts-ignore
-        target: 'asd',
-        lastMessage: {
-            createdAt: 1539956059954,
-            id: 'msg01',
-            to: 'someone',
-            from: 'else',
-            content: 'Oh hai there'
-        }
-    },
-    {
-        // @ts-ignore
-        target: 'qrt',
-        lastMessage: {
-            createdAt: 1539955059954,
-            id: 'msg02',
-            to: 'else',
-            from: 'someone',
-            content: 'This is ye other message!'
-        }
-    },
-];
-
-const messages: ChatHistory = {
-    'asd': [
-        {
-            id: 'smh',
-            content: 'Hey there',
-            from: 'asd',
-            to: 'qrt',
-            createdAt: 1539462943914
-        },
-        {
-            id: 'smhelse',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            from: 'qrt',
-            to: 'asd',
-            createdAt: 1539462944914
-        },
-        {
-            id: 'smhelsest',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            from: 'asd',
-            to: 'qrt',
-            createdAt: 1539462945914
-        },
-        {
-            id: 'smhelsestest',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            from: 'qrt',
-            to: 'asd',
-            createdAt: 1539462946914
-        }
-    ]
-};
+import * as Api from "./conversations.api";
+import {getToken} from "./auth";
 
 function* conversationSagas() {
     yield takeLatest(ActionTypes.INIT_FETCH_CONVERSATIONS, fetchConversations);
@@ -71,18 +14,16 @@ function* conversationSagas() {
 }
 
 export function* fetchConversations() {
-    const people = {
-        'asd': yield select(getPerson('asd')),
-        'qrt': yield select(getPerson('qrt'))
-    };
     try {
-        yield put(Actions.fetchConversationsSuccess(conversations.map(convo => {
-            return {
-                ...convo,
-                // @ts-ignore
-                target: people[convo.target]
-            };
-        })));
+        const token = yield call(getToken);
+        const conversations = yield call(Api.fetchConversations, token);
+        const people = yield select(getPeople);
+        yield put(Actions.fetchConversationsSuccess(
+            conversations.map(conversation => ({
+                ...conversation,
+                target: people[conversation.target]
+            }))
+        ));
     } catch (e) {
         yield put(Actions.fetchConversationsFailed());
         yield put(GlobalActions.showError('Could not fetch conversations!'));
@@ -91,9 +32,12 @@ export function* fetchConversations() {
 
 export function* fetchMessages(action) {
     const targetId = action.payload;
-    console.log(targetId);
     try {
-        yield put(Actions.fetchMessagesSuccess(messages));
+        const token = yield call(getToken);
+        const messages = yield call(Api.fetchMessages, targetId, token);
+        yield put(Actions.fetchMessagesSuccess({
+            [targetId]: messages
+        }));
     } catch (e) {
         yield put(Actions.fetchMessagesFailed());
         yield put(GlobalActions.showError('Could not retrieve messages!'));
@@ -102,18 +46,26 @@ export function* fetchMessages(action) {
 
 export function* createMessage(action) {
     const currentUser = yield select(getCurrentUser);
-    const message: IMessage = {
+    const optRes: IMessage = {
         ...action.payload,
         id: IdGenerator.generate(),
         createdAt: new Date().getTime(),
         from: currentUser.id
     };
     try {
-        yield put(Actions.createMessageOptRes(message));
+        yield put(Actions.createMessageOptRes(optRes));
+        const message = yield call(Api.sendMessage, optRes);
+        yield put(Actions.createMessageSuccess(message, optRes.id));
     } catch (e) {
-        yield put(Actions.createMessageFailed(message));
+        yield put(Actions.createMessageFailed(optRes));
         yield put(GlobalActions.showError('Could not save message!'));
     }
+}
+
+export function* messageArrived(message: IMessage) {
+    // TODO: Explicit action needed to handle this, because it goes into the 'from' field's key in the
+    // messages state slice.
+    return message;
 }
 
 export default conversationSagas;

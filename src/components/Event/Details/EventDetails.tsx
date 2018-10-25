@@ -20,7 +20,10 @@ const EventDetails = ({ navigation, deleteEvent, toggleParticipation, event, cur
         const participating = !!participants.find(user => user.id === currentUser);
         return (
             <Layout navigation={navigation} title="Event Details" back>
-                <CachedImage source={image!} style={{ height: 200, flex: 1, marginBottom: 10 }} />
+                <CachedImage
+                    source={{ uri: image }}
+                    style={{ height: 200, flex: 1, marginBottom: 10 }}
+                />
                 <View style={styles.row}>
                     <View style={styles.leftCol}>
                         <Text style={styles.monthAbbr}>{moment(from).format('MMM')}</Text>
