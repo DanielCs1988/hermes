@@ -16,7 +16,8 @@ export enum ActionTypes {
     INIT_CREATE_MESSAGE = 'INIT_CREATE_MESSAGE',
     CREATE_MESSAGE_OPTRES = 'CREATE_MESSAGE_OPTRES',
     CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS',
-    CREATE_MESSAGE_FAILED = 'CREATE_MESSAGE_FAILED'
+    CREATE_MESSAGE_FAILED = 'CREATE_MESSAGE_FAILED',
+    MESSAGE_ARRIVED = 'MESSAGE_ARRIVED'
 }
 
 export const Actions = {
@@ -37,7 +38,8 @@ export const Actions = {
     createMessageSuccess: (message: IMessage, optResId: string) => createAction(
         ActionTypes.CREATE_MESSAGE_SUCCESS, { message, optResId }
     ),
-    createMessageFailed: (rollback: IMessage) => createAction(ActionTypes.CREATE_MESSAGE_FAILED, rollback)
+    createMessageFailed: (rollback: IMessage) => createAction(ActionTypes.CREATE_MESSAGE_FAILED, rollback),
+    messageArrived: (message: IMessage) => createAction(ActionTypes.MESSAGE_ARRIVED, message)
 };
 
 export type ConversationActions = ActionsUnion<typeof Actions>;

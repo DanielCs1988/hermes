@@ -10,7 +10,6 @@ import {getToken} from "./auth";
 function* conversationSagas() {
     yield takeLatest(ActionTypes.INIT_FETCH_CONVERSATIONS, fetchConversations);
     yield takeEvery(ActionTypes.INIT_FETCH_MESSAGES, fetchMessages);
-    yield takeEvery(ActionTypes.INIT_CREATE_MESSAGE, createMessage);
 }
 
 export function* fetchConversations() {
@@ -44,7 +43,7 @@ export function* fetchMessages(action) {
     }
 }
 
-export function* createMessage(action) {
+export function* createMessage(socket, action) {
     const currentUser = yield select(getCurrentUser);
     const optRes: IMessage = {
         ...action.payload,
@@ -54,7 +53,7 @@ export function* createMessage(action) {
     };
     try {
         yield put(Actions.createMessageOptRes(optRes));
-        const message = yield call(Api.sendMessage, optRes);
+        const message = yield call(Api.sendMessage, optRes, socket);
         yield put(Actions.createMessageSuccess(message, optRes.id));
     } catch (e) {
         yield put(Actions.createMessageFailed(optRes));
@@ -63,9 +62,7 @@ export function* createMessage(action) {
 }
 
 export function* messageArrived(message: IMessage) {
-    // TODO: Explicit action needed to handle this, because it goes into the 'from' field's key in the
-    // messages state slice.
-    return message;
+    yield put(Actions.messageArrived(message));
 }
 
 export default conversationSagas;

@@ -14,6 +14,8 @@ export interface FetchedData extends Loadable {
 
 export interface GlobalState {
     error: string;
+    socketConnecting: boolean;
+    socketConnected: boolean;
 }
 
 export interface IPeople {

@@ -79,6 +79,15 @@ const conversationReducer = (state = initialState, action: ConversationActions):
                     [rbTarget]: state.messages[rbTarget].filter(msg => msg.id !== rbId)
                 }
             };
+        case ActionTypes.MESSAGE_ARRIVED:
+            const from = action.payload.from;
+            return {
+                ...state,
+                messages: {
+                    ...state.messages,
+                    [from]: [ ...state.messages[from], action.payload ]
+                }
+            };
         default:
             return state;
     }
