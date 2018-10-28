@@ -5,6 +5,7 @@ import * as Api from "./socket.api";
 import {getToken} from "./auth";
 import {SocketEvents} from "../../shared/constants";
 import {createMessage, messageArrived} from "./conversations";
+import {updateOnlineUserList} from "./people";
 
 function* socketSagas() {
     yield takeLatest(GlobalActions.INIT_WEBSOCKET_CONNECTION, connectWebSocket);
@@ -24,7 +25,7 @@ export function* initListeners(socket) {
     const newMessageChannel = yield call(Api.createSocketChannel, socket, SocketEvents.SEND_MESSAGE);
     const userListChannel = yield call(Api.createSocketChannel, socket, SocketEvents.USER_LIST);
     yield takeEvery(newMessageChannel, messageArrived);
-    yield takeEvery(userListChannel, () => {}, socket);
+    yield takeEvery(userListChannel, updateOnlineUserList);
     yield takeEvery(ChatActions.INIT_CREATE_MESSAGE, createMessage, socket);
     yield put(Actions.websocketConnected());
 }

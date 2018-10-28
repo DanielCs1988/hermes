@@ -12,10 +12,15 @@ export interface FetchedData extends Loadable {
     fetched: boolean;
 }
 
+export enum SocketStatus {
+    NOT_CONNECTED = 'NOT_CONNECTED',
+    CONNECTING = 'CONNECTING',
+    CONNECTED = 'CONNECTED'
+}
+
 export interface GlobalState {
     error: string;
-    socketConnecting: boolean;
-    socketConnected: boolean;
+    socketConnection: SocketStatus;
 }
 
 export interface IPeople {

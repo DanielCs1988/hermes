@@ -12,7 +12,9 @@ export enum ActionTypes {
 
     INIT_UPDATE_PROFILE = 'INIT_UPDATE_PROFILE',
     UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS',
-    UPDATE_PROFILE_FAILED = 'UPDATE_PROFILE_FAILED'
+    UPDATE_PROFILE_FAILED = 'UPDATE_PROFILE_FAILED',
+
+    UPDATE_ONLINE_USERS = 'UPDATE_ONLINE_USERS'
 }
 
 export const Actions = {
@@ -25,7 +27,9 @@ export const Actions = {
 
     initUpdateProfile: (profile: IPerson) => createAction(ActionTypes.INIT_UPDATE_PROFILE, profile),
     updateProfileSuccess: (profile: IPerson) => createAction(ActionTypes.UPDATE_PROFILE_SUCCESS, profile),
-    updateProfileFailed: (rollback: IPerson) => createAction(ActionTypes.UPDATE_PROFILE_FAILED, rollback)
+    updateProfileFailed: (rollback: IPerson) => createAction(ActionTypes.UPDATE_PROFILE_FAILED, rollback),
+
+    updateOnlineUsers: (userIdList: string[]) => createAction(ActionTypes.UPDATE_ONLINE_USERS, userIdList)
 };
 
 export type PeopleActions = ActionsUnion<typeof Actions>;

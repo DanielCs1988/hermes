@@ -46,6 +46,19 @@ const peopleReducer = (state = initialState, action: PeopleActions): PeopleState
                     [action.payload.id]: action.payload
                 }
             };
+        case ActionTypes.UPDATE_ONLINE_USERS:
+            const updatedUsers = { ...state.people };
+            const onlineUserIdList = new Set<string>(action.payload);
+            Object.keys(updatedUsers).forEach(userId => {
+                updatedUsers[userId] = {
+                    ...updatedUsers[userId],
+                    online: onlineUserIdList.has(userId)
+                };
+            });
+            return {
+                ...state,
+                people: updatedUsers
+            };
         default:
             return state;
     }

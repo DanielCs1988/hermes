@@ -33,4 +33,8 @@ export function* updateProfile(action) {
     }
 }
 
+export function* updateOnlineUserList(userIdList: string[]) {
+    yield put(Actions.updateOnlineUsers(userIdList));
+}
+
 export default peopleSagas;

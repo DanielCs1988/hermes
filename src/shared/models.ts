@@ -26,6 +26,7 @@ export interface IPerson extends Entity {
     phone?: string;
     address?: string;
     birthday?: number;
+    online?: boolean;
 }
 
 export interface IMessage extends Entity {

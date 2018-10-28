@@ -8,10 +8,10 @@ import {Actions as FromGlobal, GlobalActions} from "../../store/actions/global";
 
 const mapStateToProps = ({
     auth: { token, expiresAt, authenticated },
-    global: { socketConnected, socketConnecting }
+    global: { socketConnection }
 }: AppState) => ({
     token, expiresAt, authenticated,
-    socketConnected, socketConnecting
+    socketConnection
 });
 export type AuthStoreProps = ReturnType<typeof mapStateToProps>;
 

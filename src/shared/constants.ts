@@ -28,7 +28,7 @@ export enum SocketEvents {
     CONNECTED = 'connect',
     AUTHENTICATE = 'authenticate',
     SEND_MESSAGE = 'sendMessage',
-    USER_LIST = 'users'
+    USER_LIST = 'sendUserList'
 }
 
 export enum StorageKeys {

@@ -5,6 +5,7 @@ import {NavProp} from "../../shared/models";
 import {AuthDispatchers, AuthStoreProps} from "./AuthContainer";
 import {AsyncStorage} from "react-native";
 import {runIf, showErrorMessage} from "../../shared/utils";
+import {SocketStatus} from "../../store/types";
 
 const auth0 = new Auth0({
     domain: 'danielcs88.eu.auth0.com',
@@ -19,9 +20,15 @@ class Authentication extends React.Component<Props> {
     };
 
     componentDidUpdate() {
-        const { authenticated, socketConnecting, socketConnected, connectWebSocket, navigation } = this.props;
-        runIf(authenticated && !socketConnecting, connectWebSocket);
-        runIf(socketConnected, navigation.navigate, Routes.MAIN_APPLICATION);
+        const { authenticated, socketConnection, connectWebSocket, navigation } = this.props;
+        runIf(
+            authenticated && socketConnection === SocketStatus.NOT_CONNECTED,
+            connectWebSocket
+        );
+        runIf(
+            socketConnection === SocketStatus.CONNECTED,
+            navigation.navigate, Routes.MAIN_APPLICATION
+        );
     }
 
     private authenticate = async () => {

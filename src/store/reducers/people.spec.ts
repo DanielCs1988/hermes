@@ -26,32 +26,12 @@ describe('People Reducer', () => {
     describe('when fetching profiles is successful', () => {
         const action = Actions.fetchPeopleSuccess(people);
 
-        it('should cancel loading', () => {
-            expect(reducer({
-                ...defaultState, loading: true
-            }, action).loading).toBe(false);
-        });
-
-        it('should set fetched to true', () => {
-            expect(reducer(defaultState, action).fetched).toBe(true);
-        });
-
         it('should not touch current user info', () => {
             expect(reducer(defaultState, action).currentUser).toBeNull();
         });
 
         it('should save the profiles', () => {
             expect(reducer(defaultState, action).people).toEqual(people);
-        });
-    });
-
-    describe('when fetching the profiles fails', () => {
-        const action = Actions.fetchPeopleFailed();
-
-        it('should cancel loading', () => {
-            expect(reducer({
-                ...defaultState, loading: true
-            }, action)).toEqual(defaultState);
         });
     });
 
@@ -110,6 +90,26 @@ describe('People Reducer', () => {
                 people,
                 currentUser: 'p02'
             } })).toEqual(people['p02']);
+        });
+    });
+
+    describe('when the fresh userlist arrives from the server', () => {
+        const action = Actions.updateOnlineUsers(['p01']);
+
+        it('should set the online users online, the rest offline', () => {
+            expect(reducer({ ...initialState, people }, action)).toEqual({
+                ...initialState,
+                people: {
+                    'p01': {
+                        ...people['p01'],
+                        online: true
+                    },
+                    'p02': {
+                        ...people['p02'],
+                        online: false
+                    }
+                }
+            })
         });
     });
 });

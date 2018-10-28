@@ -4,10 +4,11 @@ import {ChatHistory, IEventList, IPeople} from "../types";
 export const people: IPeople = {
     'p01': {
         id: 'p01',
+        sub: 'lekek',
         givenName: 'John',
         familyName: 'Smith',
         registeredAt: 28000000,
-        profilePicture: { uri: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg' },
+        profilePicture: 'https://pbs.twimg.com/profile_images/834093730244079616/0um-zqxI_400x400.jpg',
         email: 'anon@tor.com',
         phone: 'no way',
         address: 'Somewhere hidden',
@@ -15,10 +16,11 @@ export const people: IPeople = {
     },
     'p02': {
         id: 'p02',
+        sub: 'udenlo',
         givenName: 'Jane',
         familyName: 'Smith',
         registeredAt: 58000000,
-        profilePicture: { uri: 'https://usercontent2.hubstatic.com/14052231_f520.jpg' }
+        profilePicture: 'https://usercontent2.hubstatic.com/14052231_f520.jpg'
     }
 };
 
@@ -26,7 +28,7 @@ export const event1 = {
     id: 'id1',
     title: 'Crazy GOA party',
     description: 'Lorem ipsum etc.',
-    image: { uri: 'https://i.pinimg.com/originals/b0/b7/b1/b0b7b114b759f274c704f83637254790.jpg' },
+    image: 'https://i.pinimg.com/originals/b0/b7/b1/b0b7b114b759f274c704f83637254790.jpg',
     createdAt: 1539542632486,
     from: 1542236400000,
     to: 1542322800000,
@@ -43,7 +45,7 @@ export const event2 = {
     id: 'id2',
     title: 'Grill party',
     description: 'Lorem ipsum etc.',
-    image: { uri: 'https://www.hoteltokert.hu/media/k2/items/cache/954fb0ebf1d84fb921bfb0b6e045d57f_XL.jpg' },
+    image: 'https://www.hoteltokert.hu/media/k2/items/cache/954fb0ebf1d84fb921bfb0b6e045d57f_XL.jpg',
     createdAt: 1539542632486,
     from: 1542236400000,
     to: 1542322800000,

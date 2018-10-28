@@ -1,10 +1,9 @@
-import {GlobalState} from "../types";
-import { GlobalActions, ActionTypes } from "../actions/global";
+import {GlobalState, SocketStatus} from "../types";
+import {ActionTypes, GlobalActions} from "../actions/global";
 
 export const initialState: GlobalState = {
     error: null,
-    socketConnecting: false,
-    socketConnected: false
+    socketConnection: SocketStatus.NOT_CONNECTED
 };
 
 const globalReducer = (state = initialState, action: GlobalActions) => {
@@ -22,13 +21,12 @@ const globalReducer = (state = initialState, action: GlobalActions) => {
         case ActionTypes.INIT_WEBSOCKET_CONNECTION:
             return {
                 ...state,
-                socketConnecting: true
+                socketConnection: SocketStatus.CONNECTING
             };
         case ActionTypes.WEBSOCKET_CONNECTED:
             return {
                 ...state,
-                socketConnecting: false,
-                socketConnected: true
+                socketConnection: SocketStatus.CONNECTED
             };
         default:
             return state;
