@@ -3,12 +3,21 @@ import socketIO from "socket.io-client";
 import {Endpoints, SocketEvents} from "../../shared/constants";
 
 export const initConnection = (token: string): Promise<SocketIOClient.Socket> => {
-    const socket = socketIO(Endpoints.WEBSOCKET);
+    const socket = socketIO(Endpoints.WEBSOCKET, {
+        transports: ['websocket'],
+        reconnection: true,
+        reconnectionAttempts: 10,
+        reconnectionDelay: 500
+    });
+    return openSecureChannel(token, socket);
+};
+
+const openSecureChannel = (token: string, socket: SocketIOClient.Socket) => {
     return new Promise<SocketIOClient.Socket>((resolve, reject) => {
         socket.on(SocketEvents.CONNECTED, () => {
-            socket.emit(SocketEvents.AUTHENTICATE, token, err => {
-                if (err) {
-                    reject(err);
+            socket.emit(SocketEvents.AUTHENTICATE, token, error => {
+                if (error) {
+                    reject(error);
                 } else {
                     resolve(socket);
                 }
