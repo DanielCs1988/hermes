@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {IEvent, NavProp} from "../../../shared/models";
-import EventTimePicker from "../../UI/DateTimePicker/EventTimePicker";
-import LocationPicker from "../../UI/LocationPicker/LocationPicker";
-import ImagePickerForm from "../../UI/ImagePickerForm/ImagePickerForm";
+import DateTimePickerInput from "../../UI/FormBuilder/Inputs/DateTimePicker/DateTimePickerInput";
+import LocationPicker from "../../UI/FormBuilder/Inputs/LocationPicker/LocationPicker";
+import ImagePickerForm from "../../UI/FormBuilder/Inputs/ImagePickerForm/ImagePickerForm";
 import Layout from "../../../hoc/Layout/Layout";
 import {Button, Input, Item, Text, Textarea} from "native-base";
 import {chooseBetween} from "../../../shared/utils";
@@ -74,19 +74,19 @@ class EventForm extends React.Component<Props, any> {
                         onChangeText={title => this.setState({ title })}
                     />
                 </Item>
-                <EventTimePicker
+                <DateTimePickerInput
                     showIcon
                     value={ from ? new Date(from) : undefined }
                     datePlaceholder="Beginning date"
                     timePlaceholder="Begins at"
-                    onDateTimePicked={from => this.setState({ from: from.getTime() })}
+                    onDateTimePicked={from => this.setState({ from })}
                 />
-                <EventTimePicker
+                <DateTimePickerInput
                     value={ to ? new Date(to) : undefined }
                     datePlaceholder="Ending date"
                     timePlaceholder="Ends at"
                     minimumDate={ from ? new Date(from) : undefined }
-                    onDateTimePicked={to => this.setState({ to: to.getTime() })}
+                    onDateTimePicked={to => this.setState({ to })}
                 />
                 <LocationPicker
                     value={location}

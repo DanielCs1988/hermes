@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {View} from "react-native";
 import {Button, Icon, Text} from "native-base";
-import {PlatformIcon} from "../../../shared/utils";
+import {PlatformIcon} from "../../../../../shared/utils";
 import MapForm from "./MapForm/MapForm";
-import {Location} from "../../../shared/models";
+import {Location} from "../../../../../shared/models";
 
 type State = Readonly<{ open: boolean }>
 type Props = {

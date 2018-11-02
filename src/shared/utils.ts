@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import { Toast } from "native-base";
-import {Entity} from "./models";
 import {AxiosRequestConfig} from "axios";
 
 export const PlatformIcon = (name: string) => {
@@ -31,13 +30,22 @@ export const runIf = (condition: any, func: Function, ...args: any[]) => {
     }
 };
 
-export const normalize = <T extends Entity>(collection: T[]): {[id: string]: T} => {
-    return collection
-        .map(entity => ({ [entity.id]: entity }))
-        .reduce((acc, next) => ({ ...acc, ...next }), {});
+export const normalize = (
+    collection: any[],
+    keyField = 'id',
+    transform?: (originalObject) => any
+): {[key: string]: any} => {
+    const result = {};
+    collection.forEach(el => {
+        const key = el[keyField];
+        result[key] = transform ?
+            transform(el) :
+            { ...el };
+    });
+    return result;
 };
 
-export const removeProperty = (prevObject, keyToRemove) => {
+export const removeProperty = <T>(prevObject: T, keyToRemove: keyof T) => {
     return Object.keys(prevObject)
         .reduce((obj, key) => {
             if (key !== keyToRemove) {

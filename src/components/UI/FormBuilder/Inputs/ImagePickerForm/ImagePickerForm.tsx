@@ -3,7 +3,7 @@ import {ImageURISource, View} from "react-native";
 import { CachedImage } from 'react-native-cached-image';
 import {Button, Icon, Text} from "native-base";
 import ImagePicker from 'react-native-image-picker';
-import {PlatformIcon, showErrorMessage} from "../../../shared/utils";
+import {PlatformIcon, showErrorMessage} from "../../../../../shared/utils";
 
 type Props = {
     onImagePicked: (image: ImageURISource) => void;

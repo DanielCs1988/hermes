@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Dimensions, View} from "react-native";
 import {Button, Input, Item, Text} from "native-base";
 import MapView, { Marker } from "react-native-maps";
-import {Location} from "../../../../shared/models";
+import {Location} from "../../../../../../shared/models";
 
 const initialState = {
     locationPicked: false,

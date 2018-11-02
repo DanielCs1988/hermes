@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from "react-native";
 import {Button, Icon, Text} from "native-base";
-import {PlatformIcon} from "../../../shared/utils";
+import {PlatformIcon} from "../../../../../shared/utils";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from 'moment';
 
@@ -17,11 +17,11 @@ type Props = {
     showIcon?: boolean;
     minimumDate?: Date;
     value?: Date;
-    onDateTimePicked: (dateTime: Date) => void;
-    datePlaceholder: string;
-    timePlaceholder: string;
+    onDateTimePicked: (dateTime: number) => void;
+    datePlaceholder?: string;
+    timePlaceholder?: string;
 }
-class EventTimePicker extends React.Component<Props, State> {
+class DateTimePickerInput extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         const valueProvided = props.value;
@@ -58,14 +58,14 @@ class EventTimePicker extends React.Component<Props, State> {
 
     private transmitDateTime = () => {
         if (this.state.datePicked && this.state.timePicked) {
-            this.props.onDateTimePicked(this.state.value);
+            this.props.onDateTimePicked(this.state.value.getTime());
         }
     };
 
     render() {
         const showIcon = this.props.showIcon ? this.props.showIcon : false;
         const { value, showDatePicker, showTimePicker, datePicked, timePicked } = this.state;
-        const { datePlaceholder, timePlaceholder, minimumDate } = this.props;
+        const { datePlaceholder = 'Pick a date', timePlaceholder = 'Choose a time', minimumDate } = this.props;
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, alignItems: 'center' }}>
@@ -106,4 +106,4 @@ class EventTimePicker extends React.Component<Props, State> {
     }
 }
 
-export default EventTimePicker;
+export default DateTimePickerInput;
