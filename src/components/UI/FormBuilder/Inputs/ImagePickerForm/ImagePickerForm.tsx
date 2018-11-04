@@ -7,7 +7,7 @@ import {PlatformIcon, showErrorMessage} from "../../../../../shared/utils";
 
 type Props = {
     onImagePicked: (image: ImageURISource) => void;
-    value?: ImageURISource;
+    value?: string;
 }
 type State = {
     pickedImage: ImageURISource | null;
@@ -16,7 +16,7 @@ class ImagePickerForm extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = {
-            pickedImage: props.value
+            pickedImage: { uri: props.value }
         };
     }
 
@@ -41,12 +41,12 @@ class ImagePickerForm extends React.Component<Props, State> {
     render() {
         const { pickedImage } = this.state;
         return (
-            <View style={{ height: 250, width: '100%', backgroundColor: '#555', justifyContent: 'center', position: 'relative', marginBottom: 10 }}>
+            <View style={{ height: 200, width: '100%', backgroundColor: '#555', justifyContent: 'center', position: 'relative', marginBottom: 10 }}>
             {
                 pickedImage ?
                     <>
                         <CachedImage
-                            source={{ uri: pickedImage }}
+                            source={pickedImage}
                             style={{ height: '100%', width: '100%' }}
                         />
                         <Button info

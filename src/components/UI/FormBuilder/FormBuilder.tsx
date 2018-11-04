@@ -48,6 +48,7 @@ class FormBuilder extends React.Component<FormProps, FormState> {
             <>{
                 config.map(({ type, name, label, config }) => (
                     <FormBuilderField
+                        key={name}
                         type={type}
                         value={this.state[name].value}
                         valid={this.state[name].valid}

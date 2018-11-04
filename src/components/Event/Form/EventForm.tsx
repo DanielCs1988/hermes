@@ -1,38 +1,23 @@
 import * as React from 'react';
 import {IEvent, NavProp} from "../../../shared/models";
-import DateTimePickerInput from "../../UI/FormBuilder/Inputs/DateTimePicker/DateTimePickerInput";
-import LocationPicker from "../../UI/FormBuilder/Inputs/LocationPicker/LocationPicker";
-import ImagePickerForm from "../../UI/FormBuilder/Inputs/ImagePickerForm/ImagePickerForm";
 import Layout from "../../../hoc/Layout/Layout";
-import {Button, Input, Item, Text, Textarea} from "native-base";
+import {Button, Text} from "native-base";
 import {chooseBetween} from "../../../shared/utils";
 import {EventFormDispatchers} from "./EventFormContainer";
 import {Routes} from "../../../shared/constants";
+import FormBuilder from "../../UI/FormBuilder/FormBuilder";
+import {FormFieldConfig, FormFieldType} from "../../UI/FormBuilder/types";
+import {createRef} from "react";
 
-const initialState = {
-    title: null,
-    description: '',
-    from: null,
-    to: null,
-    image: null,
-    location: null
-};
 type Props = NavProp & EventFormDispatchers & {
     event: IEvent | null;
 };
-class EventForm extends React.Component<Props, any> {
-    constructor(props) {
-        super(props);
-        const event = props.event || {};
-        this.state = {
-            ...initialState,
-            ...event
-        };
-    }
+class EventForm extends React.Component<Props> {
+    private readonly form = createRef<FormBuilder>();
 
     private submitHandler = () => {
-        if (this.validateForm()) {
-            const event = { ...this.state };
+        const event = this.form.current.submitForm();
+        if (event) {
             chooseBetween(
                 this.props.event,  // This is null (thus false) when creating a new event.
                 this.props.updateEvent,
@@ -44,17 +29,67 @@ class EventForm extends React.Component<Props, any> {
         }
     };
 
-    private validateForm = () => {
-        return Object.values(this.state).every(val => val !== null) &&
-            this.state.title.trim().length > 0 &&
-            this.state.location.name.trim().length > 0;
-    };
-
     render() {
-        const { title, description, from, to, image, location } = this.state;
+        const event = this.props.event || {} as IEvent;
+        const { title, description, from, to, image, location } = event;
         const isNewEvent = !this.props.event;
+
+        const FormConfig: FormFieldConfig[] = [
+            {
+                type: FormFieldType.Image,
+                name: 'image',
+                defaultValue: image,
+                validation: { required: true }
+            },
+            {
+                type: FormFieldType.Text,
+                name: 'title',
+                defaultValue: title,
+                validation: { minLength: 1 },
+                config: {
+                    placeholder: 'Name of the event'
+                }
+            },
+            {
+                type: FormFieldType.DateTime,
+                name: 'from',
+                defaultValue: from,
+                validation: { required: true },
+                config: {
+                    datePlaceholder: 'Beginning date',
+                    timePlaceholder: 'Begins at',
+                    showIcon: true
+                }
+            },
+            {
+                type: FormFieldType.DateTime,
+                name: 'to',
+                defaultValue: to,
+                validation: { required: true },
+                config: {
+                    datePlaceholder: 'Ending date',
+                    timePlaceholder: 'Ends at',
+                    minimumDate: from
+                }
+            },
+            {
+                type: FormFieldType.Location,
+                name: 'location',
+                defaultValue: location,
+                validation: { required: true }
+            },
+            {
+                type: FormFieldType.TextArea,
+                name: 'description',
+                defaultValue: description,
+                config: {
+                    placeholder: 'Details...'
+                }
+            }
+        ];
+
         return (
-            <Layout back
+            <Layout back padded
                 navigation={this.props.navigation}
                 title={ isNewEvent ? 'New Event' : title }
                 footer={
@@ -62,45 +97,7 @@ class EventForm extends React.Component<Props, any> {
                         <Text>{ isNewEvent ? 'Create' : 'Update' }</Text>
                     </Button>
                 }>
-                <ImagePickerForm
-                    value={image}
-                    onImagePicked={image => this.setState({ image })}
-                />
-                <Item>
-                    <Input
-                        style={{ width: '90%', marginHorizontal: '5%' }}
-                        placeholder="Name of the event"
-                        value={title}
-                        onChangeText={title => this.setState({ title })}
-                    />
-                </Item>
-                <DateTimePickerInput
-                    showIcon
-                    value={ from ? new Date(from) : undefined }
-                    datePlaceholder="Beginning date"
-                    timePlaceholder="Begins at"
-                    onDateTimePicked={from => this.setState({ from })}
-                />
-                <DateTimePickerInput
-                    value={ to ? new Date(to) : undefined }
-                    datePlaceholder="Ending date"
-                    timePlaceholder="Ends at"
-                    minimumDate={ from ? new Date(from) : undefined }
-                    onDateTimePicked={to => this.setState({ to })}
-                />
-                <LocationPicker
-                    value={location}
-                    onLocationPicked={location => this.setState({ location })}
-                />
-                <Textarea
-                    value={description}
-                    rowSpan={5}
-                    // @ts-ignore
-                    bordered
-                    style={{ margin: 5 }}
-                    placeholder="Details..."
-                    onChangeText={description => this.setState({ description })}
-                />
+                <FormBuilder config={FormConfig} ref={this.form} />
             </Layout>
         );
     }

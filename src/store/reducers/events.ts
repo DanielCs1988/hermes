@@ -87,6 +87,10 @@ export const getEvent = (id: string) => ({ events: { events } }: AppState) => {
     return events[id];
 };
 
+export const getSelectedEvent = ({ events: { events, selectedEvent } }: AppState) => {
+    return events[selectedEvent];
+};
+
 const toggleUserParticipation = (participants: IPerson[], currentUser: IPerson): IPerson[] => {
     return participants.find(user => user.id === currentUser.id) ?
         participants.filter(user => user.id !== currentUser.id) :

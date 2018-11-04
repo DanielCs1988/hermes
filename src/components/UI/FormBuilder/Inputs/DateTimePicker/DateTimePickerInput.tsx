@@ -15,8 +15,8 @@ const initialState = {
 type State = Readonly<typeof initialState>
 type Props = {
     showIcon?: boolean;
-    minimumDate?: Date;
-    value?: Date;
+    minimumDate?: number;
+    value?: number;
     onDateTimePicked: (dateTime: number) => void;
     datePlaceholder?: string;
     timePlaceholder?: string;
@@ -24,10 +24,10 @@ type Props = {
 class DateTimePickerInput extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        const valueProvided = props.value;
+        const valueProvided = !!props.value;
         this.state = {
             ...initialState,
-            value: valueProvided ? props.value : initialState.value,
+            value: valueProvided ? new Date(props.value) : initialState.value,
             datePicked: valueProvided,
             timePicked: valueProvided
         };
@@ -89,7 +89,7 @@ class DateTimePickerInput extends React.Component<Props, State> {
                     onConfirm={this.datePickedHandler}
                     onCancel={this.closeDatePicker}
                     mode="date"
-                    minimumDate={minimumDate || new Date()}
+                    minimumDate={minimumDate ? new Date(minimumDate) : new Date()}
                     date={value}
                     isVisible={showDatePicker}
                 />
@@ -97,7 +97,7 @@ class DateTimePickerInput extends React.Component<Props, State> {
                     onConfirm={this.timePickedHandler}
                     onCancel={this.closeTimePicker}
                     mode="time"
-                    minimumDate={minimumDate || new Date()}
+                    minimumDate={minimumDate ? new Date(minimumDate) : new Date()}
                     date={value}
                     isVisible={showTimePicker}
                 />

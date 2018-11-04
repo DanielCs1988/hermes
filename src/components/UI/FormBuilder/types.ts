@@ -14,7 +14,7 @@ export enum FormFieldType {
     Image = 'Image'
 }
 
-export type FormValue = string | number | Location | ImageURISource;
+export type FormValue = string | number | Location | ImageURISource | Date;
 
 export enum LabelType {
     Fixed = 'Fixed',
@@ -42,7 +42,7 @@ export interface FormFieldConfig {
     defaultValue?: FormValue;
     label?: Label
     validation?: ValidationTypes;
-    config: {
+    config?: {
         [key: string]: any
     }
 }

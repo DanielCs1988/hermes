@@ -33,7 +33,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                 <CardItem cardBody>
                     <CachedImage
                         source={{ uri: event.image }}
-                        style={{ flex: 1, height: 300 }}
+                        style={{ flex: 1, height: 220 }}
                     />
                 </CardItem>
                 <CardItem>

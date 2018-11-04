@@ -71,8 +71,8 @@ class MapForm extends React.Component<Props, State> {
         const { location, locationText, locationPicked } = this.state;
         return (
             <View style={{ width: '100%', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 5 }}>
-                    <Item rounded style={{ flex: 4, marginHorizontal: 10, paddingHorizontal: 5, backgroundColor: '#eee' }}>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <Item rounded style={{ flex: 4, paddingHorizontal: 5, marginRight: 10, backgroundColor: '#eee' }}>
                         <Input
                             value={locationText}
                             onChangeText={val => this.setState({ locationText: val })}
@@ -88,7 +88,7 @@ class MapForm extends React.Component<Props, State> {
                 </View>
                 <MapView
                     initialRegion={location}
-                    style={{ width: '90%', height: 250, marginHorizontal: '5%' }}
+                    style={{ width: '100%', height: 250 }}
                     ref={this.map}
                     onPress={this.mapClickedHandler}>
                     { locationPicked && <Marker coordinate={location} /> }

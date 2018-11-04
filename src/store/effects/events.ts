@@ -2,7 +2,7 @@ import {call, put, select, takeEvery, takeLatest} from "redux-saga/effects";
 import {Actions, ActionTypes} from "../actions/events";
 import {Actions as GlobalActions} from "../actions/global";
 import {getCurrentUser, getPeople} from "../reducers/people";
-import {getEvent} from "../reducers/events";
+import {getSelectedEvent} from "../reducers/events";
 import {IdGenerator} from "../../shared/utils";
 import * as Api from "./event.api";
 import {getToken} from "./auth";
@@ -33,6 +33,7 @@ export function* createEvent(action) {
     const organizer = yield select(getCurrentUser);
     const optRes = {
         ...action.payload,
+        image: action.payload.image.uri,
         id: IdGenerator.generate(),
         createdAt: new Date().getTime(),
         participants: [],
@@ -51,21 +52,23 @@ export function* createEvent(action) {
 }
 
 export function* updateEvent(action) {
-    const optRes = action.payload;
-    const oldEvent = yield select(getEvent(optRes.id));
+    const oldEvent = yield select(getSelectedEvent);
+    const optRes = {
+        ...oldEvent,
+        ...action.payload
+    };
     try {
         yield put(Actions.updateEvent(optRes));
         const token = yield call(getToken);
         const event = yield call(Api.updateEvent, optRes, token);
         yield put(Actions.updateEvent({
             ...event,
-            image: { uri: event.image },
             organizer: oldEvent.organizer,
             participants: oldEvent.participants
         }));
     } catch (e) {
         yield put(Actions.updateEvent(oldEvent));
-        yield put(GlobalActions.showError('Could not updated event!'));
+        yield put(GlobalActions.showError('Could not update event!'));
     }
 }
 

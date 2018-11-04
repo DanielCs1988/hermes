@@ -11,7 +11,7 @@ const FormBuilderField = ({ type, value, valid, onChange, label, config }: FormF
         case FormFieldType.Text:
             return <TextInput value={value} valid={valid} onChange={onChange} label={label} { ...config } />;
         case FormFieldType.TextArea:
-            return <TextareaField value={value} valid={valid} onChange={onChange} label={label} { ...config } />;
+            return <TextareaField value={value} valid={valid} onChange={onChange} { ...config } />;
         case FormFieldType.Location:
             return <LocationPicker value={value} onLocationPicked={onChange} { ...config } />;
         case FormFieldType.Image:
