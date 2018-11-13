@@ -8,7 +8,7 @@ type Props = InputProps & {
 }
 const TextareaField = ({ value, onChange, config, rowSpan = 5 }: Props) => (
     <Textarea
-        style={{ width: '100%' }}
+        style={{ width: '90%', marginHorizontal: '5%' }}
         value={value}
         onChangeText={onChange}
         rowSpan={rowSpan}

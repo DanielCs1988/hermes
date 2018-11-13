@@ -21,8 +21,11 @@ export function* fetchCurrentUser(token: string) {
 }
 
 export function* updateProfile(action) {
-    const updatedProfile = action.payload;
     const oldProfile = yield select(getSelectedProfile);
+    const updatedProfile = {
+        ...oldProfile,
+        ...action.payload
+    };
     try {
         const token = yield call(getToken);
         const response = yield call(Api.updateProfile, updatedProfile, token);

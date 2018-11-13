@@ -10,6 +10,7 @@ export enum FormFieldType {
     Radio = 'Radio',
     Selector = 'Selector',
     Location = 'Location',
+    Date = 'Date',
     DateTime = 'DateTime',
     Image = 'Image'
 }

@@ -27,7 +27,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                     </Body>
                     <Right style={{ flex: 2, flexDirection: 'column', alignItems: 'center' }}>
                         <Icon name={PlatformIcon('locate')}/>
-                        <Text note>{location.name}</Text>
+                        <Text style={{ alignSelf: 'center' }} note>{location.name}</Text>
                     </Right>
                 </CardItem>
                 <CardItem cardBody>
@@ -41,7 +41,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                         <Button info rounded bordered onPress={onSelect}>
                             <Icon name={PlatformIcon('more')}/>
                         </Button>
-                        <Text note>Details</Text>
+                        <Text style={{ alignSelf: 'center' }} note>Details</Text>
                     </Left>
                     <Body style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>{`${participants.length} people will be there`}</Text>
@@ -53,7 +53,7 @@ const EventListItem = ({ event, onSelect, onChangeParticipation, participating }
                                 PlatformIcon('checkmark') }
                             />
                         </Button>
-                        <Text note>{ participating ? 'Not going' : 'Join' }</Text>
+                        <Text style={{ alignSelf: 'center' }} note>{ participating ? 'Not going' : 'Join' }</Text>
                     </Right>
                 </CardItem>
             </Card>

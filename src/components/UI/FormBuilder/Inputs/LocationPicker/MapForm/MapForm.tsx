@@ -70,7 +70,7 @@ class MapForm extends React.Component<Props, State> {
     render() {
         const { location, locationText, locationPicked } = this.state;
         return (
-            <View style={{ width: '100%', alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', width: '90%', marginHorizontal: '5%' }}>
                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
                     <Item rounded style={{ flex: 4, paddingHorizontal: 5, marginRight: 10, backgroundColor: '#eee' }}>
                         <Input

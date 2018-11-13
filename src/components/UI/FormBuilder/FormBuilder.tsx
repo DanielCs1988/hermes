@@ -20,7 +20,7 @@ class FormBuilder extends React.Component<FormProps, FormState> {
             [name]: {
                 ...prevState[name],
                 value,
-                validity: validate(value, prevState[name].rules)
+                valid: validate(value, prevState[name].rules)
             }
         }));
     };

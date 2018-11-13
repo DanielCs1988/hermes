@@ -67,7 +67,7 @@ class DateTimePickerInput extends React.Component<Props, State> {
         const { value, showDatePicker, showTimePicker, datePicked, timePicked } = this.state;
         const { datePlaceholder = 'Pick a date', timePlaceholder = 'Choose a time', minimumDate } = this.props;
         return (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', marginHorizontal: '5%' }}>
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     { showIcon && <Icon name={PlatformIcon('time')}/>}
                 </View>

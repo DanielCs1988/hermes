@@ -89,7 +89,7 @@ class EventForm extends React.Component<Props> {
         ];
 
         return (
-            <Layout back padded
+            <Layout back
                 navigation={this.props.navigation}
                 title={ isNewEvent ? 'New Event' : title }
                 footer={

@@ -18,11 +18,10 @@ class LocationPicker extends React.Component<Props, State> {
         };
     }
 
-
     render() {
         return (
             <>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', marginHorizontal: '5%' }}>
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Icon name={PlatformIcon('map')} />
                     </View>
